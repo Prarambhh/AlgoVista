@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { ChevronLeft, Play, Pause, SkipForward, RotateCcw, Settings, Share2 } from "lucide-react";
@@ -47,6 +47,7 @@ export default function AlgorithmPageTemplate({
 }: AlgorithmPageTemplateProps) {
   const router = useRouter();
   const pathname = usePathname();
+  // Note: useSearchParams() is used inside this inner component
   const searchParams = useSearchParams();
 
   const [data, setData] = useState<any[]>(initialData);
@@ -421,5 +422,13 @@ export default function AlgorithmPageTemplate({
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AlgorithmPageTemplate(props: AlgorithmPageTemplateProps) {
+  return (
+    <Suspense fallback={<div className="container-px py-8 text-muted">Loading...</div>}>
+      <AlgorithmPageTemplateInner {...props} />
+    </Suspense>
   );
 }
