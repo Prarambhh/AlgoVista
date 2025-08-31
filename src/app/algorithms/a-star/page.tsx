@@ -1,3 +1,5 @@
+"use client";
+
 import React, { Suspense } from "react";
 import AlgorithmPageTemplate from "@/components/algorithm/algorithm-page-template";
 import GraphVisualizerComponent from "@/components/algorithm/graph-visualizer";
@@ -225,8 +227,7 @@ const relatedProblems = [
 
 export default function AStarPage() {
   return (
-    <Suspense fallback={<div className="container-px py-8 text-muted">Loading...</div>}>
-      <AlgorithmPageTemplate
+    <AlgorithmPageTemplate
         title="A* Search Algorithm"
         description="A* is a graph traversal and path search algorithm that uses heuristics to find the optimal path from start to goal efficiently by combining Dijkstra's algorithm with greedy best-first search."
         timeComplexity="O(b^d) where b is branching factor, d is depth"
@@ -239,6 +240,5 @@ export default function AStarPage() {
         relatedProblems={relatedProblems}
         category="Graph Algorithms"
       />
-    </Suspense>
   );
 }
