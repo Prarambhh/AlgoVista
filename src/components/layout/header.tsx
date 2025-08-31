@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "./theme-provider";
-import { Moon, Sun, Github } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useState } from "react";
 
 export function Header() {
@@ -22,7 +22,7 @@ export function Header() {
               width={32}
               height={32}
               priority
-              className="h-8 w-8 rounded-md transition-transform duration-300 ease-out group-hover:rotate-[8deg] group-hover:scale-[1.06] will-change-transform shadow-sm group-hover:shadow-[0_6px_18px_var(--accent-shadow)] block dark:hidden"
+              className="logo-light h-8 w-8 rounded-md transition-transform duration-300 ease-out group-hover:rotate-[8deg] group-hover:scale-[1.06] will-change-transform shadow-sm group-hover:shadow-[0_6px_18px_var(--accent-shadow)]"
             />
             {/* Dark theme logo */}
             <Image
@@ -31,7 +31,7 @@ export function Header() {
               width={32}
               height={32}
               priority
-              className="h-8 w-8 rounded-md transition-transform duration-300 ease-out group-hover:rotate-[8deg] group-hover:scale-[1.06] will-change-transform shadow-sm group-hover:shadow-[0_6px_18px_var(--accent-shadow)] hidden dark:block"
+              className="logo-dark h-8 w-8 rounded-md transition-transform duration-300 ease-out group-hover:rotate-[8deg] group-hover:scale-[1.06] will-change-transform shadow-sm group-hover:shadow-[0_6px_18px_var(--accent-shadow)]"
             />
             <span className="font-semibold tracking-tight gradient-text">AlgoVista</span>
           </Link>
@@ -42,13 +42,6 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2">
-          <a
-            href="https://github.com"
-            target="_blank"
-            className="hidden sm:inline-flex px-2.5 py-2 rounded-md hover:bg-[var(--glass)] text-muted"
-          >
-            <Github className="h-5 w-5" />
-          </a>
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"

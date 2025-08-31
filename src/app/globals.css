@@ -26,6 +26,12 @@
   --glass: rgba(0, 0, 0, 0.045);
 }
 
+/* Explicit logo swap rules, independent of Tailwind dark: */
+html.light .logo-dark { display: none !important; }
+html.light .logo-light { display: block !important; }
+html.dark .logo-dark { display: block !important; }
+html.dark .logo-light { display: none !important; }
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
