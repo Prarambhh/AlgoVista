@@ -32,7 +32,7 @@ interface AlgorithmPageTemplateProps {
   category: string;
 }
 
-export default function AlgorithmPageTemplate({
+function AlgorithmPageTemplateInner({
   title,
   description,
   timeComplexity,
