@@ -22,7 +22,7 @@ export default function AboutPage() {
           </p>
         </div>
         <div className="card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_var(--accent-shadow)]">
-          <h2 className="text-xl font-semibold">What you'll find</h2>
+          <h2 className="text-xl font-semibold">What you&apos;ll find</h2>
           <ul className="mt-3 text-sm text-gray-400 leading-7 list-disc pl-5 space-y-1.5">
             <li>Step-by-step animations with play/pause/step controls and speed settings</li>
             <li>Pseudocode and code samples to bridge the gap from idea to implementation</li>
@@ -40,7 +40,7 @@ export default function AboutPage() {
           <h2 className="text-xl font-semibold">Get Involved</h2>
           <p className="mt-3 text-sm text-gray-400 leading-7">
             Feedback and contributions are welcome. Found a bug or have an idea? Open an issue or
-            reach out. We'd love to hear from you.
+            reach out. We&apos;d love to hear from you.
           </p>
           <div className="mt-4 flex flex-col sm:flex-row gap-3">
             <a
