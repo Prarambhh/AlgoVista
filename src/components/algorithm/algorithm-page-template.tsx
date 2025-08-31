@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useEffect, useRef, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
@@ -31,6 +29,8 @@ interface AlgorithmPageTemplateProps {
   }>;
   category: string;
 }
+
+"use client";
 
 function AlgorithmPageTemplateInner({
   title,
