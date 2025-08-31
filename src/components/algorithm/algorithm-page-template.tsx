@@ -1,3 +1,5 @@
+"use client";
+
 import React, { Suspense } from "react";
 import { VisualizationStep } from "@/lib/visualization-utils";
 import AlgorithmPageTemplateClient from "./algorithm-page-template-client";
@@ -28,7 +30,7 @@ interface AlgorithmPageTemplateProps {
   category: string;
 }
 
-// Server component wrapper with Suspense
+// Client component wrapper with Suspense
 export default function AlgorithmPageTemplate(props: AlgorithmPageTemplateProps) {
   return (
     <Suspense fallback={<div className="container-px py-8 text-muted">Loading...</div>}>
