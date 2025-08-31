@@ -1,0 +1,241 @@
+{
+  "bubble-sort": [
+    {"id": 88, "title": "Merge Sorted Array", "slug": "merge-sorted-array", "difficulty": "Easy"},
+    {"id": 912, "title": "Sort an Array", "slug": "sort-an-array", "difficulty": "Medium"},
+    {"id": 349, "title": "Intersection of Two Arrays", "slug": "intersection-of-two-arrays", "difficulty": "Easy"}
+  ],
+  "selection-sort": [
+    {"id": 912, "title": "Sort an Array", "slug": "sort-an-array", "difficulty": "Medium"},
+    {"id": 414, "title": "Third Maximum Number", "slug": "third-maximum-number", "difficulty": "Easy"},
+    {"id": 164, "title": "Maximum Gap", "slug": "maximum-gap", "difficulty": "Hard"}
+  ],
+  "insertion-sort": [
+    {"id": 147, "title": "Insertion Sort List", "slug": "insertion-sort-list", "difficulty": "Medium"},
+    {"id": 912, "title": "Sort an Array", "slug": "sort-an-array", "difficulty": "Medium"},
+    {"id": 148, "title": "Sort List", "slug": "sort-list", "difficulty": "Medium"}
+  ],
+  "merge-sort": [
+    {"id": 148, "title": "Sort List", "slug": "sort-list", "difficulty": "Medium"},
+    {"id": 912, "title": "Sort an Array", "slug": "sort-an-array", "difficulty": "Medium"},
+    {"id": 88, "title": "Merge Sorted Array", "slug": "merge-sorted-array", "difficulty": "Easy"},
+    {"id": 21, "title": "Merge Two Sorted Lists", "slug": "merge-two-sorted-lists", "difficulty": "Easy"}
+  ],
+  "quick-sort": [
+    {"id": 912, "title": "Sort an Array", "slug": "sort-an-array", "difficulty": "Medium"},
+    {"id": 215, "title": "Kth Largest Element in an Array", "slug": "kth-largest-element-in-an-array", "difficulty": "Medium"},
+    {"id": 75, "title": "Sort Colors", "slug": "sort-colors", "difficulty": "Medium"}
+  ],
+  "heap-sort": [
+    {"id": 912, "title": "Sort an Array", "slug": "sort-an-array", "difficulty": "Medium"},
+    {"id": 215, "title": "Kth Largest Element in an Array", "slug": "kth-largest-element-in-an-array", "difficulty": "Medium"},
+    {"id": 692, "title": "Top K Frequent Words", "slug": "top-k-frequent-words", "difficulty": "Medium"}
+  ],
+  "radix-sort": [
+    {"id": 164, "title": "Maximum Gap", "slug": "maximum-gap", "difficulty": "Hard"},
+    {"id": 912, "title": "Sort an Array", "slug": "sort-an-array", "difficulty": "Medium"}
+  ],
+  "counting-sort": [
+    {"id": 912, "title": "Sort an Array", "slug": "sort-an-array", "difficulty": "Medium"},
+    {"id": 1051, "title": "Height Checker", "slug": "height-checker", "difficulty": "Easy"},
+    {"id": 274, "title": "H-Index", "slug": "h-index", "difficulty": "Medium"}
+  ],
+  "linear-search": [
+    {"id": 704, "title": "Binary Search", "slug": "binary-search", "difficulty": "Easy"},
+    {"id": 35, "title": "Search Insert Position", "slug": "search-insert-position", "difficulty": "Easy"},
+    {"id": 278, "title": "First Bad Version", "slug": "first-bad-version", "difficulty": "Easy"}
+  ],
+  "binary-search": [
+    {"id": 704, "title": "Binary Search", "slug": "binary-search", "difficulty": "Easy"},
+    {"id": 35, "title": "Search Insert Position", "slug": "search-insert-position", "difficulty": "Easy"},
+    {"id": 278, "title": "First Bad Version", "slug": "first-bad-version", "difficulty": "Easy"},
+    {"id": 33, "title": "Search in Rotated Sorted Array", "slug": "search-in-rotated-sorted-array", "difficulty": "Medium"}
+  ],
+  "jump-search": [
+    {"id": 704, "title": "Binary Search", "slug": "binary-search", "difficulty": "Easy"},
+    {"id": 69, "title": "Sqrt(x)", "slug": "sqrtx", "difficulty": "Easy"},
+    {"id": 374, "title": "Guess Number Higher or Lower", "slug": "guess-number-higher-or-lower", "difficulty": "Easy"}
+  ],
+  "interpolation-search": [
+    {"id": 704, "title": "Binary Search", "slug": "binary-search", "difficulty": "Easy"},
+    {"id": 1064, "title": "Fixed Point", "slug": "fixed-point", "difficulty": "Easy"}
+  ],
+  "exponential-search": [
+    {"id": 704, "title": "Binary Search", "slug": "binary-search", "difficulty": "Easy"},
+    {"id": 702, "title": "Search in a Sorted Array of Unknown Size", "slug": "search-in-a-sorted-array-of-unknown-size", "difficulty": "Medium"}
+  ],
+  "bfs": [
+    {"id": 102, "title": "Binary Tree Level Order Traversal", "slug": "binary-tree-level-order-traversal", "difficulty": "Medium"},
+    {"id": 200, "title": "Number of Islands", "slug": "number-of-islands", "difficulty": "Medium"},
+    {"id": 127, "title": "Word Ladder", "slug": "word-ladder", "difficulty": "Hard"},
+    {"id": 542, "title": "01 Matrix", "slug": "01-matrix", "difficulty": "Medium"}
+  ],
+  "dfs": [
+    {"id": 200, "title": "Number of Islands", "slug": "number-of-islands", "difficulty": "Medium"},
+    {"id": 94, "title": "Binary Tree Inorder Traversal", "slug": "binary-tree-inorder-traversal", "difficulty": "Easy"},
+    {"id": 144, "title": "Binary Tree Preorder Traversal", "slug": "binary-tree-preorder-traversal", "difficulty": "Easy"},
+    {"id": 695, "title": "Max Area of Island", "slug": "max-area-of-island", "difficulty": "Medium"}
+  ],
+  "dijkstra": [
+    {"id": 743, "title": "Network Delay Time", "slug": "network-delay-time", "difficulty": "Medium"},
+    {"id": 787, "title": "Cheapest Flights Within K Stops", "slug": "cheapest-flights-within-k-stops", "difficulty": "Medium"},
+    {"id": 1514, "title": "Path with Maximum Probability", "slug": "path-with-maximum-probability", "difficulty": "Medium"}
+  ],
+  "bellman-ford": [
+    {"id": 787, "title": "Cheapest Flights Within K Stops", "slug": "cheapest-flights-within-k-stops", "difficulty": "Medium"},
+    {"id": 743, "title": "Network Delay Time", "slug": "network-delay-time", "difficulty": "Medium"}
+  ],
+  "floyd-warshall": [
+    {"id": 1334, "title": "Find the City With the Smallest Number of Neighbors at a Threshold Distance", "slug": "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance", "difficulty": "Medium"},
+    {"id": 399, "title": "Evaluate Division", "slug": "evaluate-division", "difficulty": "Medium"}
+  ],
+  "kruskal": [
+    {"id": 1584, "title": "Min Cost to Connect All Points", "slug": "min-cost-to-connect-all-points", "difficulty": "Medium"},
+    {"id": 1135, "title": "Connecting Cities With Minimum Cost", "slug": "connecting-cities-with-minimum-cost", "difficulty": "Medium"}
+  ],
+  "prim": [
+    {"id": 1584, "title": "Min Cost to Connect All Points", "slug": "min-cost-to-connect-all-points", "difficulty": "Medium"},
+    {"id": 1135, "title": "Connecting Cities With Minimum Cost", "slug": "connecting-cities-with-minimum-cost", "difficulty": "Medium"}
+  ],
+  "topological-sort": [
+    {"id": 207, "title": "Course Schedule", "slug": "course-schedule", "difficulty": "Medium"},
+    {"id": 210, "title": "Course Schedule II", "slug": "course-schedule-ii", "difficulty": "Medium"},
+    {"id": 269, "title": "Alien Dictionary", "slug": "alien-dictionary", "difficulty": "Hard"}
+  ],
+  "a-star": [
+    {"id": 1091, "title": "Shortest Path in Binary Matrix", "slug": "shortest-path-in-binary-matrix", "difficulty": "Medium"},
+    {"id": 864, "title": "Shortest Path to Get All Keys", "slug": "shortest-path-to-get-all-keys", "difficulty": "Hard"}
+  ],
+  "inorder-traversal": [
+    {"id": 94, "title": "Binary Tree Inorder Traversal", "slug": "binary-tree-inorder-traversal", "difficulty": "Easy"},
+    {"id": 98, "title": "Validate Binary Search Tree", "slug": "validate-binary-search-tree", "difficulty": "Medium"},
+    {"id": 230, "title": "Kth Smallest Element in a BST", "slug": "kth-smallest-element-in-a-bst", "difficulty": "Medium"}
+  ],
+  "preorder-traversal": [
+    {"id": 144, "title": "Binary Tree Preorder Traversal", "slug": "binary-tree-preorder-traversal", "difficulty": "Easy"},
+    {"id": 589, "title": "N-ary Tree Preorder Traversal", "slug": "n-ary-tree-preorder-traversal", "difficulty": "Easy"}
+  ],
+  "postorder-traversal": [
+    {"id": 145, "title": "Binary Tree Postorder Traversal", "slug": "binary-tree-postorder-traversal", "difficulty": "Easy"},
+    {"id": 590, "title": "N-ary Tree Postorder Traversal", "slug": "n-ary-tree-postorder-traversal", "difficulty": "Easy"}
+  ],
+  "level-order-traversal": [
+    {"id": 102, "title": "Binary Tree Level Order Traversal", "slug": "binary-tree-level-order-traversal", "difficulty": "Medium"},
+    {"id": 107, "title": "Binary Tree Level Order Traversal II", "slug": "binary-tree-level-order-traversal-ii", "difficulty": "Medium"},
+    {"id": 103, "title": "Binary Tree Zigzag Level Order Traversal", "slug": "binary-tree-zigzag-level-order-traversal", "difficulty": "Medium"}
+  ],
+  "bst-insert": [
+    {"id": 701, "title": "Insert into a Binary Search Tree", "slug": "insert-into-a-binary-search-tree", "difficulty": "Medium"},
+    {"id": 108, "title": "Convert Sorted Array to Binary Search Tree", "slug": "convert-sorted-array-to-binary-search-tree", "difficulty": "Easy"}
+  ],
+  "bst-delete": [
+    {"id": 450, "title": "Delete Node in a BST", "slug": "delete-node-in-a-bst", "difficulty": "Medium"},
+    {"id": 669, "title": "Trim a Binary Search Tree", "slug": "trim-a-binary-search-tree", "difficulty": "Medium"}
+  ],
+  "bst-search": [
+    {"id": 700, "title": "Search in a Binary Search Tree", "slug": "search-in-a-binary-search-tree", "difficulty": "Easy"},
+    {"id": 98, "title": "Validate Binary Search Tree", "slug": "validate-binary-search-tree", "difficulty": "Medium"}
+  ],
+  "avl-insert": [
+    {"id": 108, "title": "Convert Sorted Array to Binary Search Tree", "slug": "convert-sorted-array-to-binary-search-tree", "difficulty": "Easy"},
+    {"id": 701, "title": "Insert into a Binary Search Tree", "slug": "insert-into-a-binary-search-tree", "difficulty": "Medium"}
+  ],
+  "avl-delete": [
+    {"id": 450, "title": "Delete Node in a BST", "slug": "delete-node-in-a-bst", "difficulty": "Medium"}
+  ],
+  "fibonacci": [
+    {"id": 509, "title": "Fibonacci Number", "slug": "fibonacci-number", "difficulty": "Easy"},
+    {"id": 70, "title": "Climbing Stairs", "slug": "climbing-stairs", "difficulty": "Easy"},
+    {"id": 1137, "title": "N-th Tribonacci Number", "slug": "n-th-tribonacci-number", "difficulty": "Easy"}
+  ],
+  "knapsack-01": [
+    {"id": 416, "title": "Partition Equal Subset Sum", "slug": "partition-equal-subset-sum", "difficulty": "Medium"},
+    {"id": 494, "title": "Target Sum", "slug": "target-sum", "difficulty": "Medium"},
+    {"id": 1049, "title": "Last Stone Weight II", "slug": "last-stone-weight-ii", "difficulty": "Medium"}
+  ],
+  "longest-common-subsequence": [
+    {"id": 1143, "title": "Longest Common Subsequence", "slug": "longest-common-subsequence", "difficulty": "Medium"},
+    {"id": 1092, "title": "Shortest Common Supersequence", "slug": "shortest-common-supersequence", "difficulty": "Hard"}
+  ],
+  "edit-distance": [
+    {"id": 72, "title": "Edit Distance", "slug": "edit-distance", "difficulty": "Hard"},
+    {"id": 161, "title": "One Edit Distance", "slug": "one-edit-distance", "difficulty": "Medium"},
+    {"id": 583, "title": "Delete Operation for Two Strings", "slug": "delete-operation-for-two-strings", "difficulty": "Medium"}
+  ],
+  "coin-change": [
+    {"id": 322, "title": "Coin Change", "slug": "coin-change", "difficulty": "Medium"},
+    {"id": 518, "title": "Coin Change 2", "slug": "coin-change-2", "difficulty": "Medium"},
+    {"id": 377, "title": "Combination Sum IV", "slug": "combination-sum-iv", "difficulty": "Medium"}
+  ],
+  "longest-increasing-subsequence": [
+    {"id": 300, "title": "Longest Increasing Subsequence", "slug": "longest-increasing-subsequence", "difficulty": "Medium"},
+    {"id": 354, "title": "Russian Doll Envelopes", "slug": "russian-doll-envelopes", "difficulty": "Hard"},
+    {"id": 673, "title": "Number of Longest Increasing Subsequence", "slug": "number-of-longest-increasing-subsequence", "difficulty": "Medium"}
+  ],
+  "matrix-chain-multiplication": [
+    {"id": 312, "title": "Burst Balloons", "slug": "burst-balloons", "difficulty": "Hard"},
+    {"id": 1039, "title": "Minimum Score Triangulation of Polygon", "slug": "minimum-score-triangulation-of-polygon", "difficulty": "Medium"}
+  ],
+  "stack-push-pop": [
+    {"id": 20, "title": "Valid Parentheses", "slug": "valid-parentheses", "difficulty": "Easy"},
+    {"id": 155, "title": "Min Stack", "slug": "min-stack", "difficulty": "Medium"},
+    {"id": 232, "title": "Implement Queue using Stacks", "slug": "implement-queue-using-stacks", "difficulty": "Easy"}
+  ],
+  "queue-enqueue-dequeue": [
+    {"id": 225, "title": "Implement Stack using Queues", "slug": "implement-stack-using-queues", "difficulty": "Easy"},
+    {"id": 622, "title": "Design Circular Queue", "slug": "design-circular-queue", "difficulty": "Medium"},
+    {"id": 933, "title": "Number of Recent Calls", "slug": "number-of-recent-calls", "difficulty": "Easy"}
+  ],
+  "linked-list-insert": [
+    {"id": 21, "title": "Merge Two Sorted Lists", "slug": "merge-two-sorted-lists", "difficulty": "Easy"},
+    {"id": 206, "title": "Reverse Linked List", "slug": "reverse-linked-list", "difficulty": "Easy"},
+    {"id": 141, "title": "Linked List Cycle", "slug": "linked-list-cycle", "difficulty": "Easy"}
+  ],
+  "linked-list-delete": [
+    {"id": 237, "title": "Delete Node in a Linked List", "slug": "delete-node-in-a-linked-list", "difficulty": "Medium"},
+    {"id": 83, "title": "Remove Duplicates from Sorted List", "slug": "remove-duplicates-from-sorted-list", "difficulty": "Easy"},
+    {"id": 203, "title": "Remove Linked List Elements", "slug": "remove-linked-list-elements", "difficulty": "Easy"}
+  ],
+  "hash-table-operations": [
+    {"id": 1, "title": "Two Sum", "slug": "two-sum", "difficulty": "Easy"},
+    {"id": 136, "title": "Single Number", "slug": "single-number", "difficulty": "Easy"},
+    {"id": 706, "title": "Design HashMap", "slug": "design-hashmap", "difficulty": "Easy"}
+  ],
+  "heap-insert": [
+    {"id": 703, "title": "Kth Largest Element in a Stream", "slug": "kth-largest-element-in-a-stream", "difficulty": "Easy"},
+    {"id": 1046, "title": "Last Stone Weight", "slug": "last-stone-weight", "difficulty": "Easy"},
+    {"id": 215, "title": "Kth Largest Element in an Array", "slug": "kth-largest-element-in-an-array", "difficulty": "Medium"}
+  ],
+  "heap-extract": [
+    {"id": 215, "title": "Kth Largest Element in an Array", "slug": "kth-largest-element-in-an-array", "difficulty": "Medium"},
+    {"id": 973, "title": "K Closest Points to Origin", "slug": "k-closest-points-to-origin", "difficulty": "Medium"},
+    {"id": 347, "title": "Top K Frequent Elements", "slug": "top-k-frequent-elements", "difficulty": "Medium"}
+  ],
+  "trie-insert": [
+    {"id": 208, "title": "Implement Trie (Prefix Tree)", "slug": "implement-trie-prefix-tree", "difficulty": "Medium"},
+    {"id": 211, "title": "Design Add and Search Words Data Structure", "slug": "design-add-and-search-words-data-structure", "difficulty": "Medium"}
+  ],
+  "trie-search": [
+    {"id": 208, "title": "Implement Trie (Prefix Tree)", "slug": "implement-trie-prefix-tree", "difficulty": "Medium"},
+    {"id": 212, "title": "Word Search II", "slug": "word-search-ii", "difficulty": "Hard"},
+    {"id": 79, "title": "Word Search", "slug": "word-search", "difficulty": "Medium"}
+  ],
+  "kadane-algorithm": [
+    {"id": 53, "title": "Maximum Subarray", "slug": "maximum-subarray", "difficulty": "Medium"},
+    {"id": 152, "title": "Maximum Product Subarray", "slug": "maximum-product-subarray", "difficulty": "Medium"},
+    {"id": 918, "title": "Maximum Sum Circular Subarray", "slug": "maximum-sum-circular-subarray", "difficulty": "Medium"}
+  ],
+  "two-pointers": [
+    {"id": 167, "title": "Two Sum II - Input Array Is Sorted", "slug": "two-sum-ii-input-array-is-sorted", "difficulty": "Medium"},
+    {"id": 15, "title": "3Sum", "slug": "3sum", "difficulty": "Medium"},
+    {"id": 11, "title": "Container With Most Water", "slug": "container-with-most-water", "difficulty": "Medium"}
+  ],
+  "sliding-window": [
+    {"id": 3, "title": "Longest Substring Without Repeating Characters", "slug": "longest-substring-without-repeating-characters", "difficulty": "Medium"},
+    {"id": 209, "title": "Minimum Size Subarray Sum", "slug": "minimum-size-subarray-sum", "difficulty": "Medium"},
+    {"id": 424, "title": "Longest Repeating Character Replacement", "slug": "longest-repeating-character-replacement", "difficulty": "Medium"}
+  ],
+  "dutch-flag": [
+    {"id": 75, "title": "Sort Colors", "slug": "sort-colors", "difficulty": "Medium"},
+    {"id": 215, "title": "Kth Largest Element in an Array", "slug": "kth-largest-element-in-an-array", "difficulty": "Medium"}
+  ]
+}

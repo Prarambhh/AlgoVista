@@ -1,0 +1,366 @@
+[
+  {
+    "id": "bubble-sort",
+    "title": "Bubble Sort",
+    "category": "sorting",
+    "difficulty": "Easy",
+    "description": "Simple comparison-based sorting algorithm that repeatedly steps through the list."
+  },
+  {
+    "id": "selection-sort",
+    "title": "Selection Sort",
+    "category": "sorting",
+    "difficulty": "Easy",
+    "description": "Sorts by repeatedly finding the minimum element and placing it at the beginning."
+  },
+  {
+    "id": "insertion-sort",
+    "title": "Insertion Sort",
+    "category": "sorting",
+    "difficulty": "Easy",
+    "description": "Builds the final sorted array one item at a time, like sorting playing cards."
+  },
+  {
+    "id": "merge-sort",
+    "title": "Merge Sort",
+    "category": "sorting",
+    "difficulty": "Medium",
+    "description": "Divide-and-conquer algorithm that divides array into halves and merges them sorted."
+  },
+  {
+    "id": "quick-sort",
+    "title": "Quick Sort",
+    "category": "sorting",
+    "difficulty": "Medium",
+    "description": "Efficient divide-and-conquer algorithm using a pivot to partition the array."
+  },
+  {
+    "id": "heap-sort",
+    "title": "Heap Sort",
+    "category": "sorting",
+    "difficulty": "Hard",
+    "description": "Comparison-based sorting using a binary heap data structure."
+  },
+  {
+    "id": "radix-sort",
+    "title": "Radix Sort",
+    "category": "sorting",
+    "difficulty": "Medium",
+    "description": "Non-comparison sorting algorithm that sorts integers by processing digits."
+  },
+  {
+    "id": "counting-sort",
+    "title": "Counting Sort",
+    "category": "sorting",
+    "difficulty": "Easy",
+    "description": "Non-comparison sorting for integers within a specific range."
+  },
+  {
+    "id": "linear-search",
+    "title": "Linear Search",
+    "category": "searching",
+    "difficulty": "Easy",
+    "description": "Simple search algorithm that checks every element sequentially."
+  },
+  {
+    "id": "binary-search",
+    "title": "Binary Search",
+    "category": "searching",
+    "difficulty": "Easy",
+    "description": "Efficient algorithm for finding an item in a sorted array by repeatedly dividing the search interval."
+  },
+  {
+    "id": "jump-search",
+    "title": "Jump Search",
+    "category": "searching",
+    "difficulty": "Medium",
+    "description": "Search algorithm that works by jumping ahead by fixed steps then doing linear search."
+  },
+  {
+    "id": "interpolation-search",
+    "title": "Interpolation Search",
+    "category": "searching",
+    "difficulty": "Medium",
+    "description": "Improved variant of binary search for uniformly distributed sorted arrays."
+  },
+  {
+    "id": "exponential-search",
+    "title": "Exponential Search",
+    "category": "searching",
+    "difficulty": "Medium",
+    "description": "Search algorithm that finds range where element is present, then does binary search."
+  },
+  {
+    "id": "bfs",
+    "title": "Breadth-First Search",
+    "category": "graph",
+    "difficulty": "Medium",
+    "description": "Graph traversal algorithm that explores all neighbors at current depth before moving to next depth."
+  },
+  {
+    "id": "dfs",
+    "title": "Depth-First Search",
+    "category": "graph",
+    "difficulty": "Medium",
+    "description": "Graph traversal algorithm that explores as far as possible along each branch."
+  },
+  {
+    "id": "dijkstra",
+    "title": "Dijkstra's Shortest Path",
+    "category": "graph",
+    "difficulty": "Medium",
+    "description": "Algorithm for finding the shortest paths between nodes in a graph."
+  },
+  {
+    "id": "bellman-ford",
+    "title": "Bellman-Ford Algorithm",
+    "category": "graph",
+    "difficulty": "Hard",
+    "description": "Finds shortest paths from single source, can handle negative edge weights."
+  },
+  {
+    "id": "floyd-warshall",
+    "title": "Floyd-Warshall Algorithm",
+    "category": "graph",
+    "difficulty": "Hard",
+    "description": "Finds shortest paths between all pairs of vertices in a weighted graph."
+  },
+  {
+    "id": "kruskal",
+    "title": "Kruskal's MST",
+    "category": "graph",
+    "difficulty": "Medium",
+    "description": "Greedy algorithm to find minimum spanning tree by sorting edges."
+  },
+  {
+    "id": "prim",
+    "title": "Prim's MST",
+    "category": "graph",
+    "difficulty": "Medium",
+    "description": "Greedy algorithm to find minimum spanning tree starting from a vertex."
+  },
+  {
+    "id": "topological-sort",
+    "title": "Topological Sort",
+    "category": "graph",
+    "difficulty": "Medium",
+    "description": "Linear ordering of vertices in a directed acyclic graph."
+  },
+  {
+    "id": "a-star",
+    "title": "A* Search",
+    "category": "graph",
+    "difficulty": "Hard",
+    "description": "Best-first search algorithm using heuristics to find optimal path."
+  },
+  {
+    "id": "inorder-traversal",
+    "title": "Inorder Traversal",
+    "category": "tree",
+    "difficulty": "Easy",
+    "description": "Tree traversal: Left, Root, Right - gives sorted order for BST."
+  },
+  {
+    "id": "preorder-traversal",
+    "title": "Preorder Traversal",
+    "category": "tree",
+    "difficulty": "Easy",
+    "description": "Tree traversal: Root, Left, Right - useful for copying tree."
+  },
+  {
+    "id": "postorder-traversal",
+    "title": "Postorder Traversal",
+    "category": "tree",
+    "difficulty": "Easy",
+    "description": "Tree traversal: Left, Right, Root - useful for deleting tree."
+  },
+  {
+    "id": "level-order-traversal",
+    "title": "Level Order Traversal",
+    "category": "tree",
+    "difficulty": "Medium",
+    "description": "Tree traversal level by level using queue (BFS for trees)."
+  },
+  {
+    "id": "bst-insert",
+    "title": "BST Insert",
+    "category": "tree",
+    "difficulty": "Medium",
+    "description": "Insert a new node in Binary Search Tree maintaining BST property."
+  },
+  {
+    "id": "bst-delete",
+    "title": "BST Delete",
+    "category": "tree",
+    "difficulty": "Medium",
+    "description": "Delete a node from Binary Search Tree maintaining BST property."
+  },
+  {
+    "id": "bst-search",
+    "title": "BST Search",
+    "category": "tree",
+    "difficulty": "Easy",
+    "description": "Search for a value in Binary Search Tree."
+  },
+  {
+    "id": "avl-insert",
+    "title": "AVL Tree Insert",
+    "category": "tree",
+    "difficulty": "Hard",
+    "description": "Insert in AVL tree with automatic balancing through rotations."
+  },
+  {
+    "id": "avl-delete",
+    "title": "AVL Tree Delete",
+    "category": "tree",
+    "difficulty": "Hard",
+    "description": "Delete from AVL tree with automatic balancing through rotations."
+  },
+  {
+    "id": "fibonacci",
+    "title": "Fibonacci Sequence",
+    "category": "dynamic-programming",
+    "difficulty": "Easy",
+    "description": "Generate Fibonacci numbers using dynamic programming approach."
+  },
+  {
+    "id": "knapsack-01",
+    "title": "0/1 Knapsack",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "description": "Maximize value of items in knapsack with weight constraint."
+  },
+  {
+    "id": "longest-common-subsequence",
+    "title": "Longest Common Subsequence",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "description": "Find the longest subsequence common to two sequences."
+  },
+  {
+    "id": "edit-distance",
+    "title": "Edit Distance",
+    "category": "dynamic-programming",
+    "difficulty": "Hard",
+    "description": "Minimum operations to transform one string into another."
+  },
+  {
+    "id": "coin-change",
+    "title": "Coin Change (Min Coins)",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "description": "Find minimum coins needed to make a target amount."
+  },
+  {
+    "id": "longest-increasing-subsequence",
+    "title": "Longest Increasing Subsequence",
+    "category": "dynamic-programming",
+    "difficulty": "Medium",
+    "description": "Find the longest subsequence where elements are in increasing order."
+  },
+  {
+    "id": "matrix-chain-multiplication",
+    "title": "Matrix Chain Multiplication",
+    "category": "dynamic-programming",
+    "difficulty": "Hard",
+    "description": "Find optimal way to multiply a chain of matrices."
+  },
+  {
+    "id": "stack-push-pop",
+    "title": "Stack Operations",
+    "category": "data-structures",
+    "difficulty": "Easy",
+    "description": "Visualize push and pop operations on a stack (LIFO)."
+  },
+  {
+    "id": "queue-enqueue-dequeue",
+    "title": "Queue Operations",
+    "category": "data-structures",
+    "difficulty": "Easy",
+    "description": "Visualize enqueue and dequeue operations on a queue (FIFO)."
+  },
+  {
+    "id": "linked-list-insert",
+    "title": "Linked List Insert",
+    "category": "data-structures",
+    "difficulty": "Easy",
+    "description": "Insert nodes at different positions in a linked list."
+  },
+  {
+    "id": "linked-list-delete",
+    "title": "Linked List Delete",
+    "category": "data-structures",
+    "difficulty": "Easy",
+    "description": "Delete nodes from different positions in a linked list."
+  },
+  {
+    "id": "hash-table-operations",
+    "title": "Hash Table Operations",
+    "category": "data-structures",
+    "difficulty": "Medium",
+    "description": "Insert, search, and delete in hash table with collision handling."
+  },
+  {
+    "id": "heap-insert",
+    "title": "Heap Insert",
+    "category": "data-structures",
+    "difficulty": "Medium",
+    "description": "Insert element in min/max heap and maintain heap property."
+  },
+  {
+    "id": "heap-extract",
+    "title": "Heap Extract",
+    "category": "data-structures",
+    "difficulty": "Medium",
+    "description": "Extract min/max element from heap and maintain heap property."
+  },
+  {
+    "id": "trie-insert",
+    "title": "Trie Insert",
+    "category": "data-structures",
+    "difficulty": "Medium",
+    "description": "Insert words into a trie (prefix tree) data structure."
+  },
+  {
+    "id": "trie-search",
+    "title": "Trie Search",
+    "category": "data-structures",
+    "difficulty": "Medium",
+    "description": "Search for words and prefixes in a trie data structure."
+  },
+  {
+    "id": "trie-operations",
+    "title": "Trie Operations",
+    "category": "data-structures",
+    "difficulty": "Medium",
+    "description": "Insert and search words in a trie and visualize the steps."
+  },
+  {
+    "id": "kadane-algorithm",
+    "title": "Kadane's Algorithm",
+    "category": "arrays",
+    "difficulty": "Medium",
+    "description": "Find maximum sum contiguous subarray using dynamic programming."
+  },
+  {
+    "id": "two-pointers",
+    "title": "Two Pointers Technique",
+    "category": "arrays",
+    "difficulty": "Easy",
+    "description": "Use two pointers to solve array problems efficiently."
+  },
+  {
+    "id": "sliding-window",
+    "title": "Sliding Window",
+    "category": "arrays",
+    "difficulty": "Medium",
+    "description": "Use sliding window technique for subarray problems."
+  },
+  {
+    "id": "dutch-flag",
+    "title": "Dutch National Flag",
+    "category": "arrays",
+    "difficulty": "Medium",
+    "description": "Partition array into three parts using Dutch flag algorithm."
+  }
+]
