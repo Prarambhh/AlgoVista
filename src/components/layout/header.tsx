@@ -5,10 +5,20 @@ import Image from "next/image";
 import { useTheme } from "./theme-provider";
 import { Moon, Sun } from "lucide-react";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 export function Header() {
   const { theme, toggleTheme } = useTheme();
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href: string) => {
+    if (!pathname) return false;
+    return pathname === href || pathname.startsWith(href + "/");
+  };
+
+  const linkBase = "transition-colors hover:text-[var(--foreground)]";
+  const activeClasses = "text-[var(--foreground)] font-semibold border-b-2 border-current pb-0.5";
 
   return (
     <header className="sticky top-0 z-40 w-full glass border-b border-[var(--border)]">
@@ -36,8 +46,12 @@ export function Header() {
             <span className="font-semibold tracking-tight gradient-text">AlgoVista</span>
           </Link>
           <nav className="hidden sm:flex items-center gap-6 text-sm text-muted">
-            <Link href="/catalog" className="hover:text-[var(--foreground)]">Catalog</Link>
-            <Link href="/about" className="hover:text-[var(--foreground)]">About</Link>
+            <Link href="/catalog" className={`${linkBase} ${isActive("/catalog") ? activeClasses : ""}`}>
+              Catalog
+            </Link>
+            <Link href="/about" className={`${linkBase} ${isActive("/about") ? activeClasses : ""}`}>
+              About
+            </Link>
           </nav>
         </div>
 
