@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Shuffle, Plus, Minus } from "lucide-react";
 
 interface ArrayInputProps {
@@ -10,11 +10,16 @@ interface ArrayInputProps {
 
 export default function ArrayInput({ data, onDataChange }: ArrayInputProps) {
   const [inputValue, setInputValue] = useState("");
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   // Sync local text field with prop data so restored URL state reflects in the UI
+  // but avoid clobbering the user's in-progress typing while the input is focused.
   useEffect(() => {
     const derived = Array.isArray(data) ? data.join(", ") : "";
-    setInputValue((prev) => (prev !== derived ? derived : prev));
+    const isFocused = typeof document !== "undefined" && inputRef.current === document.activeElement;
+    if (!isFocused && inputValue !== derived) {
+      setInputValue(derived);
+    }
   }, [data]);
 
   const generateRandomArray = (size: number = 8) => {
@@ -30,8 +35,11 @@ export default function ArrayInput({ data, onDataChange }: ArrayInputProps) {
         .filter(s => s !== "")
         .map(s => parseInt(s))
         .filter(n => !isNaN(n));
-      
-      if (numbers.length > 0) {
+
+      // Always reflect the parsed numbers in parent state, including when cleared.
+      if (value.trim() === "") {
+        onDataChange([]);
+      } else {
         onDataChange(numbers);
       }
     } catch (error) {
@@ -57,11 +65,13 @@ export default function ArrayInput({ data, onDataChange }: ArrayInputProps) {
           Custom Array (comma-separated)
         </label>
         <input
+          ref={inputRef}
           type="text"
           value={inputValue}
           onChange={(e) => {
-            setInputValue(e.target.value);
-            handleInputChange(e.target.value);
+            const val = e.target.value;
+            setInputValue(val);
+            handleInputChange(val);
           }}
           placeholder="e.g., 64, 34, 25, 12, 22, 11, 90"
           className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
