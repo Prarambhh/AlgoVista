@@ -32,6 +32,11 @@ export function Starfield() {
 
     const rand = (min: number, max: number) => Math.random() * (max - min) + min;
 
+    let isLight = false;
+    const updateThemeFlag = () => {
+      isLight = document.documentElement.classList.contains("light");
+    };
+
     const handleResize = () => {
       const { innerWidth, innerHeight } = window;
       width = innerWidth;
@@ -51,7 +56,7 @@ export function Starfield() {
       stars = new Array(target).fill(0).map(() => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        size: rand(0.6, 1.8),
+        size: isLight ? rand(0.8, 2.2) : rand(0.6, 1.8),
         speed: rand(0.02, 0.08),
         twinklePhase: Math.random() * Math.PI * 2,
         twinkleSpeed: rand(0.002, 0.01),
@@ -70,8 +75,9 @@ export function Starfield() {
     };
 
     const onThemeChange = () => {
-      // No-op: we draw with light alpha so it looks good in both themes.
-      // This function left in case we later want to react to theme toggles.
+      updateThemeFlag();
+      // Recompute for new theme so sizes/colors feel right immediately
+      handleResize();
     };
 
     const observer = new MutationObserver(onThemeChange);
@@ -79,6 +85,9 @@ export function Starfield() {
 
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", onMouseMove, { passive: true });
+
+    // Init
+    updateThemeFlag();
     handleResize();
 
     let lastTime = performance.now();
@@ -93,10 +102,6 @@ export function Starfield() {
       mouseY += (targetY - mouseY) * 0.03;
 
       ctx.clearRect(0, 0, width, height);
-
-      // Slight backdrop tint for depth (very subtle)
-      // ctx.fillStyle = "rgba(2, 6, 23, 0.02)"; // too subtle—disabled by default
-      // ctx.fillRect(0, 0, width, height);
 
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
@@ -116,13 +121,21 @@ export function Starfield() {
         // Twinkle
         s.twinklePhase += s.twinkleSpeed * dt;
         const twinkle = 0.6 + 0.4 * Math.sin(s.twinklePhase);
-        const alpha = 0.5 * twinkle; // keep subtle so it works in light mode too
 
-        // Slight colored glow for a futuristic vibe
         ctx.save();
-        ctx.shadowBlur = 8 * twinkle;
-        ctx.shadowColor = `hsla(${s.hue}, 95%, 70%, ${0.25 * twinkle})`;
-        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        if (isLight) {
+          // In light mode use darker particles with toned-down glow so they are visible on white
+          const alpha = 0.25 * twinkle + 0.1; // 0.1..0.35
+          ctx.shadowBlur = 4 * twinkle;
+          ctx.shadowColor = `hsla(${s.hue}, 85%, 40%, ${0.12 * twinkle})`;
+          ctx.fillStyle = `rgba(17, 24, 39, ${alpha})`; // slate-900-ish
+        } else {
+          // In dark mode keep bright white stars with bluish glow
+          const alpha = 0.5 * twinkle;
+          ctx.shadowBlur = 8 * twinkle;
+          ctx.shadowColor = `hsla(${s.hue}, 95%, 70%, ${0.25 * twinkle})`;
+          ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        }
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
         ctx.fill();
