@@ -84,8 +84,11 @@ export default function CatalogPage() {
       </div>
 
       {sortedGroups.map((group) => (
-        <details key={group} className="rounded-lg border border-[var(--border)] overflow-hidden transition-all">
-          <summary className="cursor-pointer list-none p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-2 hover:bg-[var(--glass)]">
+        <details
+          key={group}
+          className="rounded-lg border border-[var(--border)] overflow-hidden transition-shadow hover:shadow-[0_10px_30px_var(--accent-shadow)]"
+        >
+          <summary className="cursor-pointer list-none p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-2 hover:bg-[var(--glass)] transition-all duration-200">
             <h2 className="text-lg font-semibold text-center sm:text-left">{group}</h2>
             <span className="text-gray-400 text-sm">{grouped[group].length} items</span>
           </summary>
@@ -95,7 +98,7 @@ export default function CatalogPage() {
                 <Link
                   key={alg.id}
                   href={`/algorithms/${alg.id}`}
-                  className="card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_var(--accent-shadow)] hover:border-[color-mix(in_oklab,var(--accent)_40%,var(--border))]"
+                  className="card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_var(--accent-shadow)] hover:border-[color-mix(in_oklab,var(--accent)_40%,var(--border))] hover:brightness-100"
                 >
                   <div className="flex items-center justify-between">
                     <h3 className="font-semibold text-center sm:text-left w-full">{alg.title}</h3>
