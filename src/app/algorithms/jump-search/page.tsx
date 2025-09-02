@@ -121,6 +121,94 @@ const pseudocode = [
   "  return -1"
 ];
 
+const codeSamples = {
+  "JavaScript": `function jumpSearch(arr, target) {
+  const n = arr.length;
+  const step = Math.floor(Math.sqrt(n));
+  let prev = 0;
+  
+  // Jump to the right block
+  while (arr[Math.min(step, n) - 1] < target) {
+    prev = step;
+    step += Math.floor(Math.sqrt(n));
+    if (prev >= n) {
+      return -1; // Not found
+    }
+  }
+  
+  // Linear search in the identified block
+  while (arr[prev] < target) {
+    prev++;
+    if (prev === Math.min(step, n)) {
+      return -1; // Not found
+    }
+  }
+  
+  // If element is found
+  if (arr[prev] === target) {
+    return prev;
+  }
+  
+  return -1; // Not found
+}`,
+  "Python": `import math
+
+def jump_search(arr, target):
+    n = len(arr)
+    step = int(math.sqrt(n))
+    prev = 0
+    
+    # Jump to the right block
+    while arr[min(step, n) - 1] < target:
+        prev = step
+        step += int(math.sqrt(n))
+        if prev >= n:
+            return -1  # Not found
+    
+    # Linear search in the identified block
+    while arr[prev] < target:
+        prev += 1
+        if prev == min(step, n):
+            return -1  # Not found
+    
+    # If element is found
+    if arr[prev] == target:
+        return prev
+    
+    return -1  # Not found`,
+  "Java": `public class JumpSearch {
+    public static int jumpSearch(int[] arr, int target) {
+        int n = arr.length;
+        int step = (int) Math.sqrt(n);
+        int prev = 0;
+        
+        // Jump to the right block
+        while (arr[Math.min(step, n) - 1] < target) {
+            prev = step;
+            step += (int) Math.sqrt(n);
+            if (prev >= n) {
+                return -1; // Not found
+            }
+        }
+        
+        // Linear search in the identified block
+        while (arr[prev] < target) {
+            prev++;
+            if (prev == Math.min(step, n)) {
+                return -1; // Not found
+            }
+        }
+        
+        // If element is found
+        if (arr[prev] == target) {
+            return prev;
+        }
+        
+        return -1; // Not found
+    }
+}`
+};
+
 export default function JumpSearchPage() {
   const relatedProblems = leetcodeProblems["jump-search"] || [];
 
@@ -137,6 +225,7 @@ export default function JumpSearchPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Searching Algorithm"
+      code={codeSamples}
     />
   );
 }

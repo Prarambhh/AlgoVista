@@ -208,6 +208,58 @@ const relatedProblems = [
   { id: 912, title: "Sort an Array", slug: "sort-an-array", difficulty: "Medium" as const }
 ];
 
+const codeSamples = {
+  javascript: `// Dutch National Flag (Sort Colors) in-place
+function dutchNationalFlag(arr) {
+  let low = 0, mid = 0, high = arr.length - 1;
+  while (mid <= high) {
+    if (arr[mid] === 0) {
+      [arr[low], arr[mid]] = [arr[mid], arr[low]];
+      low++; mid++;
+    } else if (arr[mid] === 1) {
+      mid++;
+    } else { // arr[mid] === 2
+      [arr[mid], arr[high]] = [arr[high], arr[mid]];
+      high--;
+    }
+  }
+  return arr;
+}`,
+
+  python: `# Dutch National Flag (Sort Colors) in-place
+def dutch_national_flag(arr):
+    low, mid, high = 0, 0, len(arr) - 1
+    while mid <= high:
+        if arr[mid] == 0:
+            arr[low], arr[mid] = arr[mid], arr[low]
+            low += 1
+            mid += 1
+        elif arr[mid] == 1:
+            mid += 1
+        else:  # arr[mid] == 2
+            arr[mid], arr[high] = arr[high], arr[mid]
+            high -= 1
+    return arr`,
+
+  java: `// Dutch National Flag (Sort Colors) in-place
+public class DutchNationalFlag {
+    public void sortColors(int[] nums) {
+        int low = 0, mid = 0, high = nums.length - 1;
+        while (mid <= high) {
+            if (nums[mid] == 0) {
+                int tmp = nums[low]; nums[low] = nums[mid]; nums[mid] = tmp;
+                low++; mid++;
+            } else if (nums[mid] == 1) {
+                mid++;
+            } else {
+                int tmp = nums[mid]; nums[mid] = nums[high]; nums[high] = tmp;
+                high--;
+            }
+        }
+    }
+}`
+};
+
 // Adapter to match AlgorithmPageTemplate's expected input component signature
 function DutchFlagInputWrapper({ data, onDataChange }: { data: any[]; onDataChange: (data: any[]) => void; }) {
   const current: DutchFlagData = data[0] || { array: [] };
@@ -231,6 +283,7 @@ export default function DutchFlagPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Arrays"
+      code={codeSamples}
     />
   );
 }

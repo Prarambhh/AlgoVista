@@ -180,6 +180,124 @@ const relatedProblems = [
   }
 ];
 
+const codeSamples = {
+  "JavaScript": `class UnionFind {
+  constructor(n) {
+    this.parent = Array.from({length: n}, (_, i) => i);
+    this.rank = Array(n).fill(0);
+  }
+  find(x) {
+    if (this.parent[x] !== x) {
+      this.parent[x] = this.find(this.parent[x]);
+    }
+    return this.parent[x];
+  }
+  union(x, y) {
+    const px = this.find(x), py = this.find(y);
+    if (px === py) return false;
+    if (this.rank[px] < this.rank[py]) {
+      this.parent[px] = py;
+    } else if (this.rank[px] > this.rank[py]) {
+      this.parent[py] = px;
+    } else {
+      this.parent[py] = px;
+      this.rank[px]++;
+    }
+    return true;
+  }
+}
+function kruskal(edges, n) {
+  edges.sort((a, b) => a[2] - b[2]);
+  const uf = new UnionFind(n);
+  const mst = [];
+  for (const [u, v, w] of edges) {
+    if (uf.union(u, v)) {
+      mst.push([u, v, w]);
+      if (mst.length === n - 1) break;
+    }
+  }
+  return mst;
+}`,
+  "Python": `class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+    
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+    
+    def union(self, x, y):
+        px, py = self.find(x), self.find(y)
+        if px == py:
+            return False
+        if self.rank[px] < self.rank[py]:
+            self.parent[px] = py
+        elif self.rank[px] > self.rank[py]:
+            self.parent[py] = px
+        else:
+            self.parent[py] = px
+            self.rank[px] += 1
+        return True
+
+def kruskal(edges, n):
+    edges.sort(key=lambda x: x[2])
+    uf = UnionFind(n)
+    mst = []
+    for u, v, w in edges:
+        if uf.union(u, v):
+            mst.append((u, v, w))
+            if len(mst) == n - 1:
+                break
+    return mst`,
+  "Java": `import java.util.*;
+
+class UnionFind {
+    private int[] parent, rank;
+    
+    public UnionFind(int n) {
+        parent = new int[n];
+        rank = new int[n];
+        for (int i = 0; i < n; i++) parent[i] = i;
+    }
+    
+    public int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);
+        }
+        return parent[x];
+    }
+    
+    public boolean union(int x, int y) {
+        int px = find(x), py = find(y);
+        if (px == py) return false;
+        if (rank[px] < rank[py]) {
+            parent[px] = py;
+        } else if (rank[px] > rank[py]) {
+            parent[py] = px;
+        } else {
+            parent[py] = px;
+            rank[px]++;
+        }
+        return true;
+    }
+}
+
+public static List<int[]> kruskal(int[][] edges, int n) {
+    Arrays.sort(edges, (a, b) -> Integer.compare(a[2], b[2]));
+    UnionFind uf = new UnionFind(n);
+    List<int[]> mst = new ArrayList<>();
+    for (int[] edge : edges) {
+        if (uf.union(edge[0], edge[1])) {
+            mst.add(edge);
+            if (mst.size() == n - 1) break;
+        }
+    }
+    return mst;
+}`
+};
+
 export default function KruskalPage() {
   return (
     <AlgorithmPageTemplate
@@ -194,6 +312,7 @@ export default function KruskalPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Graph Algorithms"
+      code={codeSamples}
     />
   );
 }

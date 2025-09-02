@@ -394,6 +394,368 @@ const initialData: AVLDeleteData[] = [{
 
 const relatedProblems = leetcodeProblems["avl-delete"] || [];
 
+const codeSamples = {
+  "JavaScript": `class AVLNode {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+    this.height = 1;
+  }
+}
+
+class AVLTree {
+  constructor() {
+    this.root = null;
+  }
+  
+  getHeight(node) {
+    return node ? node.height : 0;
+  }
+  
+  getBalance(node) {
+    return node ? this.getHeight(node.left) - this.getHeight(node.right) : 0;
+  }
+  
+  updateHeight(node) {
+    if (node) {
+      node.height = 1 + Math.max(this.getHeight(node.left), this.getHeight(node.right));
+    }
+  }
+  
+  rotateRight(z) {
+    const y = z.left;
+    const T3 = y.right;
+    
+    y.right = z;
+    z.left = T3;
+    
+    this.updateHeight(z);
+    this.updateHeight(y);
+    
+    return y;
+  }
+  
+  rotateLeft(z) {
+    const y = z.right;
+    const T2 = y.left;
+    
+    y.left = z;
+    z.right = T2;
+    
+    this.updateHeight(z);
+    this.updateHeight(y);
+    
+    return y;
+  }
+  
+  minValueNode(node) {
+    while (node.left) {
+      node = node.left;
+    }
+    return node;
+  }
+  
+  delete(node, value) {
+    if (!node) return node;
+    
+    if (value < node.value) {
+      node.left = this.delete(node.left, value);
+    } else if (value > node.value) {
+      node.right = this.delete(node.right, value);
+    } else {
+      // Node to be deleted
+      if (!node.left || !node.right) {
+        const temp = node.left || node.right;
+        if (!temp) {
+          node = null;
+        } else {
+          node = temp;
+        }
+      } else {
+        // Node with two children
+        const temp = this.minValueNode(node.right);
+        node.value = temp.value;
+        node.right = this.delete(node.right, temp.value);
+      }
+    }
+    
+    if (!node) return node;
+    
+    // Update height
+    this.updateHeight(node);
+    
+    // Check balance and rotate if needed
+    const balance = this.getBalance(node);
+    
+    // Left Left Case
+    if (balance > 1 && this.getBalance(node.left) >= 0) {
+      return this.rotateRight(node);
+    }
+    
+    // Left Right Case
+    if (balance > 1 && this.getBalance(node.left) < 0) {
+      node.left = this.rotateLeft(node.left);
+      return this.rotateRight(node);
+    }
+    
+    // Right Right Case
+    if (balance < -1 && this.getBalance(node.right) <= 0) {
+      return this.rotateLeft(node);
+    }
+    
+    // Right Left Case
+    if (balance < -1 && this.getBalance(node.right) > 0) {
+      node.right = this.rotateRight(node.right);
+      return this.rotateLeft(node);
+    }
+    
+    return node;
+  }
+  
+  deleteValue(value) {
+    this.root = this.delete(this.root, value);
+  }
+}`,
+  "Python": `class AVLNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+        self.height = 1
+
+class AVLTree:
+    def __init__(self):
+        self.root = None
+    
+    def get_height(self, node):
+        return node.height if node else 0
+    
+    def get_balance(self, node):
+        return (self.get_height(node.left) - self.get_height(node.right)) if node else 0
+    
+    def update_height(self, node):
+        if node:
+            node.height = 1 + max(self.get_height(node.left), self.get_height(node.right))
+    
+    def rotate_right(self, z):
+        y = z.left
+        T3 = y.right
+        
+        # Perform rotation
+        y.right = z
+        z.left = T3
+        
+        # Update heights
+        self.update_height(z)
+        self.update_height(y)
+        
+        return y
+    
+    def rotate_left(self, z):
+        y = z.right
+        T2 = y.left
+        
+        # Perform rotation
+        y.left = z
+        z.right = T2
+        
+        # Update heights
+        self.update_height(z)
+        self.update_height(y)
+        
+        return y
+    
+    def min_value_node(self, node):
+        while node.left:
+            node = node.left
+        return node
+    
+    def delete(self, node, value):
+        if not node:
+            return node
+        
+        if value < node.value:
+            node.left = self.delete(node.left, value)
+        elif value > node.value:
+            node.right = self.delete(node.right, value)
+        else:
+            # Node to be deleted
+            if not node.left or not node.right:
+                temp = node.left or node.right
+                if not temp:
+                    node = None
+                else:
+                    node = temp
+            else:
+                # Node with two children
+                temp = self.min_value_node(node.right)
+                node.value = temp.value
+                node.right = self.delete(node.right, temp.value)
+        
+        if not node:
+            return node
+        
+        # Update height
+        self.update_height(node)
+        
+        # Check balance and rotate if needed
+        balance = self.get_balance(node)
+        
+        # Left Left Case
+        if balance > 1 and self.get_balance(node.left) >= 0:
+            return self.rotate_right(node)
+        
+        # Left Right Case
+        if balance > 1 and self.get_balance(node.left) < 0:
+            node.left = self.rotate_left(node.left)
+            return self.rotate_right(node)
+        
+        # Right Right Case
+        if balance < -1 and self.get_balance(node.right) <= 0:
+            return self.rotate_left(node)
+        
+        # Right Left Case
+        if balance < -1 and self.get_balance(node.right) > 0:
+            node.right = self.rotate_right(node.right)
+            return self.rotate_left(node)
+        
+        return node
+    
+    def delete_value(self, value):
+        self.root = self.delete(self.root, value)`,
+  "Java": `class AVLNode {
+    int value;
+    AVLNode left, right;
+    int height;
+    
+    AVLNode(int value) {
+        this.value = value;
+        this.height = 1;
+    }
+}
+
+public class AVLTree {
+    private AVLNode root;
+    
+    public int getHeight(AVLNode node) {
+        return (node == null) ? 0 : node.height;
+    }
+    
+    public int getBalance(AVLNode node) {
+        return (node == null) ? 0 : getHeight(node.left) - getHeight(node.right);
+    }
+    
+    public void updateHeight(AVLNode node) {
+        if (node != null) {
+            node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
+        }
+    }
+    
+    public AVLNode rotateRight(AVLNode z) {
+        AVLNode y = z.left;
+        AVLNode T3 = y.right;
+        
+        // Perform rotation
+        y.right = z;
+        z.left = T3;
+        
+        // Update heights
+        updateHeight(z);
+        updateHeight(y);
+        
+        return y;
+    }
+    
+    public AVLNode rotateLeft(AVLNode z) {
+        AVLNode y = z.right;
+        AVLNode T2 = y.left;
+        
+        // Perform rotation
+        y.left = z;
+        z.right = T2;
+        
+        // Update heights
+        updateHeight(z);
+        updateHeight(y);
+        
+        return y;
+    }
+    
+    public AVLNode minValueNode(AVLNode node) {
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
+    
+    public AVLNode delete(AVLNode node, int value) {
+        if (node == null) {
+            return node;
+        }
+        
+        if (value < node.value) {
+            node.left = delete(node.left, value);
+        } else if (value > node.value) {
+            node.right = delete(node.right, value);
+        } else {
+            // Node to be deleted
+            if (node.left == null || node.right == null) {
+                AVLNode temp = (node.left != null) ? node.left : node.right;
+                if (temp == null) {
+                    node = null;
+                } else {
+                    node = temp;
+                }
+            } else {
+                // Node with two children
+                AVLNode temp = minValueNode(node.right);
+                node.value = temp.value;
+                node.right = delete(node.right, temp.value);
+            }
+        }
+        
+        if (node == null) {
+            return node;
+        }
+        
+        // Update height
+        updateHeight(node);
+        
+        // Check balance and rotate if needed
+        int balance = getBalance(node);
+        
+        // Left Left Case
+        if (balance > 1 && getBalance(node.left) >= 0) {
+            return rotateRight(node);
+        }
+        
+        // Left Right Case
+        if (balance > 1 && getBalance(node.left) < 0) {
+            node.left = rotateLeft(node.left);
+            return rotateRight(node);
+        }
+        
+        // Right Right Case
+        if (balance < -1 && getBalance(node.right) <= 0) {
+            return rotateLeft(node);
+        }
+        
+        // Right Left Case
+        if (balance < -1 && getBalance(node.right) > 0) {
+            node.right = rotateRight(node.right);
+            return rotateLeft(node);
+        }
+        
+        return node;
+    }
+    
+    public void deleteValue(int value) {
+        root = delete(root, value);
+    }
+}`
+};
+
 export default function AVLDeletePage() {
   return (
     <AlgorithmPageTemplate
@@ -408,6 +770,7 @@ export default function AVLDeletePage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Tree Algorithms"
+      code={codeSamples}
     />
   );
 }

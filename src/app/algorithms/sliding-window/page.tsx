@@ -171,6 +171,48 @@ const relatedProblems = [
   { id: 438, title: "Find All Anagrams in a String", slug: "find-all-anagrams-in-a-string", difficulty: "Medium" as const }
 ];
 
+const codeSamples = {
+  javascript: `// Maximum sum subarray of size k using Sliding Window
+function maxSumSubarray(arr, k) {
+  if (k <= 0 || k > arr.length) return 0;
+  let windowSum = 0;
+  for (let i = 0; i < k; i++) windowSum += arr[i];
+  let maxSum = windowSum;
+  for (let i = k; i < arr.length; i++) {
+    windowSum += arr[i] - arr[i - k];
+    if (windowSum > maxSum) maxSum = windowSum;
+  }
+  return maxSum;
+}`,
+
+  python: `# Maximum sum subarray of size k using Sliding Window
+def max_sum_subarray(arr, k):
+    if k <= 0 or k > len(arr):
+        return 0
+    window_sum = sum(arr[:k])
+    max_sum = window_sum
+    for i in range(k, len(arr)):
+        window_sum += arr[i] - arr[i - k]
+        if window_sum > max_sum:
+            max_sum = window_sum
+    return max_sum`,
+
+  java: `// Maximum sum subarray of size k using Sliding Window
+public class SlidingWindowMaxSum {
+    public int maxSumSubarray(int[] arr, int k) {
+        if (arr == null || k <= 0 || k > arr.length) return 0;
+        int windowSum = 0;
+        for (int i = 0; i < k; i++) windowSum += arr[i];
+        int maxSum = windowSum;
+        for (int i = k; i < arr.length; i++) {
+            windowSum += arr[i] - arr[i - k];
+            if (windowSum > maxSum) maxSum = windowSum;
+        }
+        return maxSum;
+    }
+}`
+};
+
 export default function SlidingWindowPage() {
   return (
     <AlgorithmPageTemplate
@@ -185,6 +227,7 @@ export default function SlidingWindowPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Arrays"
+      code={codeSamples}
     />
   );
 }

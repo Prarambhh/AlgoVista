@@ -125,6 +125,65 @@ const relatedProblems = [
   }
 ];
 
+const codeSamples = {
+  "JavaScript": `// Dynamic Programming with memoization
+function fibonacci(n, memo = {}) {
+  if (n <= 1) return n;
+  if (memo[n] !== undefined) return memo[n];
+  memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo);
+  return memo[n];
+}
+
+// Bottom-up approach
+function fibonacciDP(n) {
+  if (n <= 1) return n;
+  const dp = [0, 1];
+  for (let i = 2; i <= n; i++) {
+    dp[i] = dp[i - 1] + dp[i - 2];
+  }
+  return dp[n];
+}`,
+  "Python": `# Dynamic Programming with memoization
+def fibonacci(n, memo={}):
+    if n <= 1:
+        return n
+    if n in memo:
+        return memo[n]
+    memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
+    return memo[n]
+
+# Bottom-up approach
+def fibonacci_dp(n):
+    if n <= 1:
+        return n
+    dp = [0, 1]
+    for i in range(2, n + 1):
+        dp.append(dp[i - 1] + dp[i - 2])
+    return dp[n]`,
+  "Java": `import java.util.*;
+
+// Dynamic Programming with memoization
+public static long fibonacci(int n, Map<Integer, Long> memo) {
+    if (n <= 1) return n;
+    if (memo.containsKey(n)) return memo.get(n);
+    long result = fibonacci(n - 1, memo) + fibonacci(n - 2, memo);
+    memo.put(n, result);
+    return result;
+}
+
+// Bottom-up approach
+public static long fibonacciDP(int n) {
+    if (n <= 1) return n;
+    long[] dp = new long[n + 1];
+    dp[0] = 0;
+    dp[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+    return dp[n];
+}`
+};
+
 export default function FibonacciPage() {
   return (
     <AlgorithmPageTemplate
@@ -139,6 +198,7 @@ export default function FibonacciPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Dynamic Programming"
+      code={codeSamples}
     />
   );
 }

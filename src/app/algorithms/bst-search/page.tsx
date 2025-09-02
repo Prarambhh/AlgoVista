@@ -206,17 +206,238 @@ const relatedProblems = leetcodeProblems["bst-search"] || [];
 export default function BSTSearchPage() {
   return (
     <AlgorithmPageTemplate
-      title="BST Search"
-      description="Search for a value in a Binary Search Tree by traversing left or right based on comparisons."
-      timeComplexity="O(h) where h is tree height"
-      spaceComplexity="O(1) iterative"
+      title="BST: Search"
+      description="Search for a value in a Binary Search Tree"
+      timeComplexity="O(log n) average, O(n) worst"
+      spaceComplexity="O(1)"
       visualizationComponent={TreeVisualizerComponent}
       generateSteps={generateBSTSearchSteps}
       initialData={initialData}
       dataInputComponent={BSTSearchInput}
       pseudocode={pseudocode}
+      code={codeSamples}
       relatedProblems={relatedProblems}
-      category="Tree Algorithms"
+      category="Trees"
     />
-  );
+   );
 }
+
+const codeSamples = {
+  javascript: `// Binary Search Tree Search - JavaScript
+class TreeNode {
+  constructor(val, left = null, right = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+function searchBST(root, val) {
+  // Base case: if tree is empty or node not found
+  if (!root) {
+    return null;
+  }
+  
+  // If value matches current node
+  if (root.val === val) {
+    return root;
+  }
+  
+  // Search left subtree if value is smaller
+  if (val < root.val) {
+    return searchBST(root.left, val);
+  }
+  
+  // Search right subtree if value is larger
+  return searchBST(root.right, val);
+}
+
+// Iterative approach
+function searchBSTIterative(root, val) {
+  let current = root;
+  
+  while (current) {
+    if (current.val === val) {
+      return current;
+    }
+    
+    if (val < current.val) {
+      current = current.left;
+    } else {
+      current = current.right;
+    }
+  }
+  
+  return null; // Not found
+}
+
+// Check if value exists in BST
+function containsValue(root, val) {
+  return searchBST(root, val) !== null;
+}`,
+
+  python: `# Binary Search Tree Search - Python
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def search_bst(root, val):
+    """
+    Search for a value in BST (recursive approach)
+    Time: O(log n) average, O(n) worst case
+    Space: O(log n) average, O(n) worst case (recursion stack)
+    """
+    # Base case: if tree is empty or node not found
+    if not root:
+        return None
+    
+    # If value matches current node
+    if root.val == val:
+        return root
+    
+    # Search left subtree if value is smaller
+    if val < root.val:
+        return search_bst(root.left, val)
+    
+    # Search right subtree if value is larger
+    return search_bst(root.right, val)
+
+def search_bst_iterative(root, val):
+    """
+    Search for a value in BST (iterative approach)
+    Time: O(log n) average, O(n) worst case
+    Space: O(1)
+    """
+    current = root
+    
+    while current:
+        if current.val == val:
+            return current
+        
+        if val < current.val:
+            current = current.left
+        else:
+            current = current.right
+    
+    return None  # Not found
+
+def contains_value(root, val):
+    """Check if value exists in BST"""
+    return search_bst(root, val) is not None
+
+def find_min(root):
+    """Find minimum value in BST"""
+    if not root:
+        return None
+    
+    while root.left:
+        root = root.left
+    return root
+
+def find_max(root):
+    """Find maximum value in BST"""
+    if not root:
+        return None
+    
+    while root.right:
+        root = root.right
+    return root`,
+
+  java: `// Binary Search Tree Search - Java
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+public class BSTSearch {
+    /**
+     * Search for a value in BST (recursive approach)
+     * Time: O(log n) average, O(n) worst case
+     * Space: O(log n) average, O(n) worst case (recursion stack)
+     */
+    public TreeNode searchBST(TreeNode root, int val) {
+        // Base case: if tree is empty or node not found
+        if (root == null) {
+            return null;
+        }
+        
+        // If value matches current node
+        if (root.val == val) {
+            return root;
+        }
+        
+        // Search left subtree if value is smaller
+        if (val < root.val) {
+            return searchBST(root.left, val);
+        }
+        
+        // Search right subtree if value is larger
+        return searchBST(root.right, val);
+    }
+    
+    /**
+     * Search for a value in BST (iterative approach)
+     * Time: O(log n) average, O(n) worst case
+     * Space: O(1)
+     */
+    public TreeNode searchBSTIterative(TreeNode root, int val) {
+        TreeNode current = root;
+        
+        while (current != null) {
+            if (current.val == val) {
+                return current;
+            }
+            
+            if (val < current.val) {
+                current = current.left;
+            } else {
+                current = current.right;
+            }
+        }
+        
+        return null; // Not found
+    }
+    
+    /**
+     * Check if value exists in BST
+     */
+    public boolean containsValue(TreeNode root, int val) {
+        return searchBST(root, val) != null;
+    }
+    
+    /**
+     * Find minimum value in BST
+     */
+    public TreeNode findMin(TreeNode root) {
+        if (root == null) return null;
+        
+        while (root.left != null) {
+            root = root.left;
+        }
+        return root;
+    }
+    
+    /**
+     * Find maximum value in BST
+     */
+    public TreeNode findMax(TreeNode root) {
+        if (root == null) return null;
+        
+        while (root.right != null) {
+            root = root.right;
+        }
+        return root;
+    }
+}`
+};

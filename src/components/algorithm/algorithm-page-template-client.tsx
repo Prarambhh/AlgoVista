@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { ChevronLeft, Play, Pause, SkipForward, RotateCcw, Settings, Share2 } from "lucide-react";
+import { ChevronLeft, ChevronDown, Play, Pause, SkipForward, RotateCcw, Settings, Share2 } from "lucide-react";
 import { VisualizationStep } from "@/lib/visualization-utils";
 import { AlgorithmPageTemplateProps } from "./algorithm-page-template";
 
@@ -18,7 +18,8 @@ export default function AlgorithmPageTemplateClient({
   dataInputComponent: DataInputComponent,
   pseudocode,
   relatedProblems,
-  category
+  category,
+  code
 }: AlgorithmPageTemplateProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -32,7 +33,100 @@ export default function AlgorithmPageTemplateClient({
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const hydratedFromUrl = useRef(false);
   const [copied, setCopied] = useState(false);
+  const [Prism, setPrism] = useState<any>(null);
   const didFirstUrlSync = useRef(false);
+
+  // Code tab state
+  // Language mapping for display names to Prism identifiers
+  const langDisplayToPrism: Record<string, string> = {
+    'JavaScript': 'javascript',
+    'Python': 'python', 
+    'Java': 'java',
+    'C++': 'cpp',
+    'TypeScript': 'typescript'
+  };
+  
+  // Prefer provided languages, fallback to common trio so every page shows tabs
+  const providedLangs = Object.keys(code || {});
+  const defaultLangs = ["JavaScript", "Python", "Java"];
+  
+  // Convert lowercase keys to display names for backward compatibility
+  const displayLangs = providedLangs.map(lang => {
+    const entries = Object.entries(langDisplayToPrism);
+    const found = entries.find(([display, prism]) => prism === lang.toLowerCase());
+    return found ? found[0] : lang;
+  });
+  
+  const languages = displayLangs.length > 0 ? displayLangs : defaultLangs;
+  const preferredOrder = ["JavaScript", "Python", "Java", "C++", "TypeScript"]; // future-friendly
+  const defaultLang = languages
+    .slice()
+    .sort(
+      (a, b) =>
+        (preferredOrder.indexOf(a) === -1 ? 999 : preferredOrder.indexOf(a)) -
+        (preferredOrder.indexOf(b) === -1 ? 999 : preferredOrder.indexOf(b))
+    )[0];
+  const [selectedLang, setSelectedLang] = useState<string | undefined>(defaultLang);
+  useEffect(() => {
+    // Reset selected language when available language list changes
+    if (languages.length > 0) {
+      const nextDefault = languages
+        .slice()
+        .sort(
+          (a, b) =>
+            (preferredOrder.indexOf(a) === -1 ? 999 : preferredOrder.indexOf(a)) -
+            (preferredOrder.indexOf(b) === -1 ? 999 : preferredOrder.indexOf(b))
+        )[0];
+      setSelectedLang(nextDefault);
+    } else {
+      setSelectedLang(undefined);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [languages.join("|")]);  
+
+  // Helper to resolve code text regardless of key casing (e.g., 'JavaScript' vs 'javascript')
+  const resolveCodeFor = (lang: string): string | undefined => {
+    if (!code) return undefined;
+    const prismKey = langDisplayToPrism[lang] || lang.toLowerCase();
+    return (
+      code[prismKey] ??
+      code[lang] ??
+      code[lang.toLowerCase()] ??
+      (typeof prismKey === 'string' ? code[prismKey.toLowerCase?.()] : undefined)
+    );
+  };
+
+  useEffect(() => {
+    const loadPrism = async () => {
+      const prism = await import("prismjs");
+      await import("prismjs/components/prism-javascript");
+      await import("prismjs/components/prism-python");
+      await import("prismjs/components/prism-java");
+      await import("prismjs/components/prism-typescript");
+      await import("prismjs/components/prism-cpp");
+      setPrism(prism);
+    };
+    loadPrism();
+  }, []);
+
+  useEffect(() => {
+    if (Prism && codeRef.current && selectedLang) {
+      const element = codeRef.current;
+      const currentCode = resolveCodeFor(selectedLang) 
+        || `// ${selectedLang} implementation coming soon for ${title}.\n// Meanwhile, follow the pseudocode above to implement it in ${selectedLang}.\n`;
+      element.innerHTML = '';
+      element.textContent = currentCode;
+      const langClass = `language-${langDisplayToPrism[selectedLang] || selectedLang.toLowerCase()}`;
+      element.className = langClass;
+      Prism.highlightElement(element);
+    }
+  }, [Prism, selectedLang, code, title]);
+
+  // Keep a stable reference to generateSteps to avoid resetting steps on unrelated re-renders
+  const generateStepsRef = useRef(generateSteps);
+  useEffect(() => {
+    generateStepsRef.current = generateSteps;
+  }, [generateSteps]);
 
   // Helper to normalize and compare search params (ignore Next.js internal params like _rsc)
   const normalizeSearchParams = (sp: URLSearchParams) => {
@@ -73,13 +167,13 @@ export default function AlgorithmPageTemplateClient({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Generate steps when data changes
+  // Generate steps when data changes (use ref-stable function to avoid resets on every render)
   useEffect(() => {
-    const newSteps = generateSteps(data);
+    const newSteps = generateStepsRef.current(data);
     setSteps(newSteps);
     setCurrentStep(0);
     setIsPlaying(false);
-  }, [data, generateSteps]);
+  }, [data]);
 
   // Auto-play progression
   useEffect(() => {
@@ -178,12 +272,31 @@ export default function AlgorithmPageTemplateClient({
 
   const currentStepData = steps[currentStep] || { type: "init", description: "Ready to start", data: {} };
 
+  // Result helpers (for Sorting algorithms)
+  const isSortingCategory = typeof category === 'string' && category.toLowerCase().includes('sorting');
+  const lastStep = steps.length > 0 ? steps[steps.length - 1] : undefined;
+  const finalArray = Array.isArray(lastStep?.data)
+    ? (lastStep!.data as any[])
+    : (lastStep && Array.isArray((lastStep as any).data?.arr))
+      ? ((lastStep as any).data.arr as any[])
+      : (lastStep && Array.isArray((lastStep as any).data?.array))
+        ? ((lastStep as any).data.array as any[])
+        : null;
+  const currentArray = Array.isArray((currentStepData as any)?.data)
+    ? ((currentStepData as any).data as any[])
+    : Array.isArray((currentStepData as any)?.data?.arr)
+      ? ((currentStepData as any).data.arr as any[])
+      : Array.isArray((currentStepData as any)?.data?.array)
+        ? ((currentStepData as any).data.array as any[])
+        : (Array.isArray(data) ? data : null);
+  const isAtEnd = steps.length > 0 && currentStep >= steps.length - 1;
+
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "Easy": return "text-green-400 bg-green-400/10";
-      case "Medium": return "text-yellow-400 bg-yellow-400/10";
-      case "Hard": return "text-red-400 bg-red-400/10";
-      default: return "text-gray-400 bg-gray-400/10";
+      case "Easy": return "text-green-300 bg-green-500/20 border-green-500/30";
+      case "Medium": return "text-orange-300 bg-orange-500/20 border-orange-500/30";
+      case "Hard": return "text-red-300 bg-red-500/20 border-red-500/30";
+      default: return "text-gray-400 bg-gray-400/10 border-gray-400/30";
     }
   };
 
@@ -192,6 +305,24 @@ export default function AlgorithmPageTemplateClient({
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
       setTimeout(() => setCopied(false), 1200);
+    } catch {
+      // ignore
+    }
+  };
+
+  const [codeCopied, setCodeCopied] = useState(false);
+  const [isPseudocodeExpanded, setIsPseudocodeExpanded] = useState(true);
+  const [isCodeExpanded, setIsCodeExpanded] = useState(true);
+  const codeRef = useRef<HTMLElement>(null);
+
+  const handleCopyCode = async () => {
+    if (!selectedLang || !code) return;
+    const codeText = resolveCodeFor(selectedLang);
+    if (!codeText) return;
+    try {
+      await navigator.clipboard.writeText(codeText);
+      setCodeCopied(true);
+      setTimeout(() => setCodeCopied(false), 1200);
     } catch {
       // ignore
     }
@@ -319,30 +450,109 @@ export default function AlgorithmPageTemplateClient({
                 </div>
               </div>
             </div>
+ 
+            {/* Always-visible Result for Sorting Algorithms */}
+            {isSortingCategory && (
+              <div className="card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_var(--accent-shadow)]">
+                <h3 className="text-lg font-semibold text-[var(--foreground)] mb-3 leading-7">
+                  {isAtEnd ? 'Sorted Array' : 'Current Array'}
+                </h3>
+                <div className="surface p-3 border border-[var(--border)] rounded">
+                  {Array.isArray(currentArray) && currentArray.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                      {currentArray.map((val, idx) => (
+                        <span key={idx} className="badge border text-[var(--foreground)] bg-[var(--muted)]">
+                          {String(val)}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-sm text-muted">No array data</div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Pseudocode */}
             <div className="card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_var(--accent-shadow)]">
-              <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4 leading-7">Pseudocode</h3>
-              <div className="text-sm space-y-1.5">
-                {(pseudocode || []).map((line, index) => (
-                  <div
-                    key={index}
-                    className={`flex items-start leading-7 rounded ${index === (currentStepData?.data?.pseudocodeLine ?? -1) ? 'bg-[var(--muted)] px-2 py-0.5' : ''}`}
-                  >
-                    <span
-                      className={`w-6 text-right mr-3 ${index === (currentStepData?.data?.pseudocodeLine ?? -1) ? 'text-[var(--accent)] font-semibold' : 'text-muted'}`}
-                    >
-                      {index + 1}
-                    </span>
-                    <span
-                      className={`${index === (currentStepData?.data?.pseudocodeLine ?? -1) ? 'text-[var(--foreground)] font-medium' : 'text-[var(--foreground)]'}`}
-                    >
-                      {line}
-                    </span>
-                  </div>
-                ))}
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-[var(--foreground)] leading-7">Pseudocode</h3>
+                <button
+                  onClick={() => setIsPseudocodeExpanded(!isPseudocodeExpanded)}
+                  className="flex items-center gap-1 text-sm text-muted hover:text-[var(--foreground)] hover:bg-[var(--accent)]/10 hover:border-[var(--accent)]/20 border border-transparent px-2 py-1 rounded transition-all duration-200"
+                >
+                  <ChevronDown className={`w-4 h-4 transition-transform ${isPseudocodeExpanded ? 'rotate-180' : ''}`} />
+                  {isPseudocodeExpanded ? 'Collapse' : 'Expand'}
+                </button>
               </div>
+              {isPseudocodeExpanded && (
+                <div className="text-sm space-y-1.5">
+                  {(pseudocode || []).map((line, index) => (
+                    <div
+                      key={index}
+                      className={`flex items-start leading-7 rounded ${index === (currentStepData?.data?.pseudocodeLine ?? -1) ? 'bg-[var(--muted)] px-2 py-0.5' : ''}`}
+                    >
+                      <span
+                        className={`w-6 text-right mr-3 ${index === (currentStepData?.data?.pseudocodeLine ?? -1) ? 'text-[var(--accent)] font-semibold' : 'text-muted'}`}
+                      >
+                        {index + 1}
+                      </span>
+                      <span
+                        className={`${index === (currentStepData?.data?.pseudocodeLine ?? -1) ? 'text-[var(--foreground)] font-medium' : 'text-[var(--foreground)]'}`}
+                      >
+                        {line}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+
+            {/* Code Samples (optional) */}
+            {selectedLang && (
+              <div className="card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_var(--accent-shadow)]">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-lg font-semibold text-[var(--foreground)] leading-7">Code</h3>
+                  <div className="flex items-center gap-2">
+                    {isCodeExpanded && (
+                      <>
+                        <div className="flex items-center gap-1 bg-[var(--muted)] p-1 rounded border border-[var(--border)]">
+                          {languages.map((lang) => (
+                            <button
+                              key={lang}
+                              onClick={() => setSelectedLang(lang)}
+                              className={`text-xs px-2 py-1 rounded transition-colors ${selectedLang === lang ? 'bg-[var(--accent)] text-white' : 'hover:bg-[var(--accent-muted)] text-[var(--foreground)]'}`}
+                            >
+                              {lang}
+                            </button>
+                          ))}
+                        </div>
+                        <button onClick={handleCopyCode} className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded bg-[var(--muted)] hover:brightness-95 border border-[var(--border)] text-[var(--foreground)] transition-colors">
+                          {codeCopied ? 'Copied!' : 'Copy'}
+                        </button>
+                      </>
+                    )}
+                    <button
+                      onClick={() => setIsCodeExpanded(!isCodeExpanded)}
+                      className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded bg-[var(--muted)] hover:brightness-95 border border-[var(--border)] text-[var(--foreground)] transition-colors"
+                    >
+                      <ChevronDown className={`w-4 h-4 transition-transform ${isCodeExpanded ? 'rotate-180' : ''}`} />
+                      {isCodeExpanded ? 'Collapse' : 'Expand'}
+                    </button>
+                  </div>
+                </div>
+
+                {isCodeExpanded && (
+                  <div className="surface border border-[var(--border)] rounded p-3 overflow-auto">
+                    <pre className="text-xs sm:text-sm leading-6 whitespace-pre font-mono text-[var(--foreground)]">
+                      <code ref={codeRef} className={`language-${selectedLang ? (langDisplayToPrism[selectedLang] || selectedLang.toLowerCase()) : ''}`}>
+{selectedLang ? (resolveCodeFor(selectedLang) || `// ${selectedLang} implementation coming soon for ${title}.\n// Meanwhile, follow the pseudocode above to implement it in ${selectedLang}.`) : ''}
+                      </code>
+                    </pre>
+                  </div>
+                )}
+               </div>
+             )}
 
             {/* Related LeetCode Problems */}
             <div className="card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_var(--accent-shadow)]">
@@ -363,7 +573,7 @@ export default function AlgorithmPageTemplateClient({
                         </h4>
                         <p className="text-muted text-xs">#{problem.id}</p>
                       </div>
-                      <span className={`badge ${getDifficultyColor(problem.difficulty)}`}>
+                      <span className={`badge border ${getDifficultyColor(problem.difficulty)}`}>
                         {problem.difficulty}
                       </span>
                     </div>
@@ -392,6 +602,21 @@ export default function AlgorithmPageTemplateClient({
               </div>
               <div className="text-xs text-muted mt-2">{currentStep + 1} / {steps.length}</div>
             </div>
+ 
+             {/* moved to main visualization area */ false && isSortingCategory && isAtEnd && finalArray && (
+               <div className="card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_var(--accent-shadow)]">
+                 <h3 className="text-lg font-semibold text-[var(--foreground)] mb-3 leading-7">Sorted Array</h3>
+                 <div className="surface p-3 border border-[var(--border)] rounded">
+                   <div className="flex flex-wrap gap-2">
+                     {finalArray?.map((val, idx) => (
+                       <span key={idx} className="badge border text-[var(--foreground)] bg-[var(--muted)]">
+                         {String(val)}
+                       </span>
+                     ))}
+                   </div>
+                 </div>
+               </div>
+             )}
           </div>
         </div>
       </div>

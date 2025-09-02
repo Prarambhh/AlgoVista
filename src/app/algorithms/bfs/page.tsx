@@ -167,6 +167,67 @@ const relatedProblems = [
   }
 ];
 
+const codeSamples = {
+  "JavaScript": `function bfs(graph, start) {
+  const visited = new Set();
+  const queue = [start];
+  const order = [];
+  visited.add(start);
+  while (queue.length > 0) {
+    const u = queue.shift();
+    order.push(u);
+    for (const v of (graph[u] || [])) {
+      if (!visited.has(v)) {
+        visited.add(v);
+        queue.push(v);
+      }
+    }
+  }
+  return order;
+}`,
+  "Python": `from collections import deque
+
+def bfs(graph, start):
+    visited = set([start])
+    q = deque([start])
+    order = []
+    while q:
+        u = q.popleft()
+        order.append(u)
+        for v in graph.get(u, []):
+            if v not in visited:
+                visited.add(v)
+                q.append(v)
+    return order`,
+  "Java": `import java.util.*;
+
+class Graph {
+    private final Map<Integer, List<Integer>> adj = new HashMap<>();
+    public void addEdge(int u, int v) {
+        adj.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
+        adj.computeIfAbsent(v, k -> new ArrayList<>()).add(u); // undirected
+    }
+    public List<Integer> bfs(int start) {
+        List<Integer> order = new ArrayList<>();
+        Set<Integer> visited = new HashSet<>();
+        Queue<Integer> q = new ArrayDeque<>();
+        visited.add(start);
+        q.add(start);
+        while (!q.isEmpty()) {
+            int u = q.poll();
+            order.add(u);
+            for (int v : adj.getOrDefault(u, Collections.emptyList())) {
+                if (!visited.contains(v)) {
+                    visited.add(v);
+                    q.add(v);
+                }
+            }
+        }
+        return order;
+    }
+}`
+};
+
 export default function BFSPage() {
   return (
     <AlgorithmPageTemplate
@@ -181,6 +242,7 @@ export default function BFSPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Graph Algorithms"
+      code={codeSamples}
     />
   );
 }

@@ -72,6 +72,85 @@ const relatedProblems = (leetcodeProblems["heap-extract"] || []) as Array<{
   id: number; title: string; slug: string; difficulty: string;
 }>;
 
+const codeSamples = {
+  javascript: `// Max-Heap with extractMax (sift down)
+class MaxHeap {
+  constructor(arr = []) { this.heap = []; arr.forEach(x => this.insert(x)); }
+  parent(i){ return Math.floor((i - 1) / 2); }
+  left(i){ return 2 * i + 1; }
+  right(i){ return 2 * i + 2; }
+  insert(val){ this.heap.push(val); this.siftUp(this.heap.length - 1); }
+  siftUp(i){ while(i>0 && this.heap[this.parent(i)] < this.heap[i]){ const p=this.parent(i); [this.heap[i],this.heap[p]]=[this.heap[p],this.heap[i]]; i=p; } }
+  extractMax(){ if(this.heap.length===0) return null; const max=this.heap[0]; const last=this.heap.pop(); if(this.heap.length>0){ this.heap[0]=last; this.heapify(0); } return max; }
+  heapify(i){ while(true){ let largest=i; const l=this.left(i), r=this.right(i); if(l<this.heap.length && this.heap[l]>this.heap[largest]) largest=l; if(r<this.heap.length && this.heap[r]>this.heap[largest]) largest=r; if(largest!==i){ [this.heap[i],this.heap[largest]]=[this.heap[largest],this.heap[i]]; i=largest; } else break; } }
+}
+
+// Usage
+const h = new MaxHeap([9,5,6,2,3,4]);
+const max = h.extractMax();`,
+
+  python: `# Max-Heap with extract_max (sift down)
+class MaxHeap:
+    def __init__(self, arr=None):
+        self.heap = []
+        if arr:
+            for x in arr: self.insert(x)
+    def _parent(self, i): return (i - 1) // 2
+    def _left(self, i): return 2 * i + 1
+    def _right(self, i): return 2 * i + 2
+    def insert(self, val):
+        self.heap.append(val)
+        self._sift_up(len(self.heap) - 1)
+    def _sift_up(self, i):
+        while i > 0 and self.heap[self._parent(i)] < self.heap[i]:
+            p = self._parent(i)
+            self.heap[i], self.heap[p] = self.heap[p], self.heap[i]
+            i = p
+    def extract_max(self):
+        if not self.heap: return None
+        maxv = self.heap[0]
+        last = self.heap.pop()
+        if self.heap:
+            self.heap[0] = last
+            self._heapify(0)
+        return maxv
+    def _heapify(self, i):
+        n = len(self.heap)
+        while True:
+            largest = i
+            l, r = self._left(i), self._right(i)
+            if l < n and self.heap[l] > self.heap[largest]: largest = l
+            if r < n and self.heap[r] > self.heap[largest]: largest = r
+            if largest != i:
+                self.heap[i], self.heap[largest] = self.heap[largest], self.heap[i]
+                i = largest
+            else:
+                break
+
+# Usage
+h = MaxHeap([9,5,6,2,3,4])
+maxv = h.extract_max()`,
+
+  java: `// Max-Heap with extractMax (sift down)
+import java.util.*;
+class MaxHeap {
+    private List<Integer> heap = new ArrayList<>();
+    public MaxHeap() {}
+    public MaxHeap(int[] arr){ for(int x: arr) insert(x); }
+    private int parent(int i){ return (i - 1) / 2; }
+    private int left(int i){ return 2*i + 1; }
+    private int right(int i){ return 2*i + 2; }
+    public void insert(int val){ heap.add(val); siftUp(heap.size()-1); }
+    private void siftUp(int i){ while(i>0 && heap.get(parent(i)) < heap.get(i)){ int p=parent(i); Collections.swap(heap, i, p); i=p; } }
+    public Integer extractMax(){ if(heap.isEmpty()) return null; int max = heap.get(0); int last = heap.remove(heap.size()-1); if(!heap.isEmpty()){ heap.set(0, last); heapify(0); } return max; }
+    private void heapify(int i){ while(true){ int largest = i; int l=left(i), r=right(i); if(l<heap.size() && heap.get(l) > heap.get(largest)) largest=l; if(r<heap.size() && heap.get(r) > heap.get(largest)) largest=r; if(largest!=i){ Collections.swap(heap, i, largest); i=largest; } else break; } }
+}
+
+// Usage
+// MaxHeap h = new MaxHeap(new int[]{9,5,6,2,3,4});
+// Integer max = h.extractMax();`
+};
+
 export default function HeapExtractPage() {
   return (
     <AlgorithmPageTemplate
@@ -86,6 +165,7 @@ export default function HeapExtractPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Data Structures"
+      code={codeSamples}
     />
   );
 }

@@ -86,6 +86,74 @@ const relatedProblems = (leetcodeProblems["heap-insert"] || []) as Array<{
   id: number; title: string; slug: string; difficulty: string;
 }>;
 
+const codeSamples = {
+  javascript: `// Max-Heap with insert (sift up)
+class MaxHeap {
+  constructor() { this.heap = []; }
+  parent(i) { return Math.floor((i - 1) / 2); }
+  insert(val) {
+    this.heap.push(val);
+    this.siftUp(this.heap.length - 1);
+  }
+  siftUp(i) {
+    while (i > 0 && this.heap[this.parent(i)] < this.heap[i]) {
+      const p = this.parent(i);
+      [this.heap[i], this.heap[p]] = [this.heap[p], this.heap[i]];
+      i = p;
+    }
+  }
+}
+
+// Usage
+const h = new MaxHeap();
+[3,1,6,5,2,4].forEach(x => h.insert(x));`,
+
+  python: `# Max-Heap with insert (sift up)
+class MaxHeap:
+    def __init__(self):
+        self.heap = []
+    
+    def _parent(self, i):
+        return (i - 1) // 2
+    
+    def insert(self, val):
+        self.heap.append(val)
+        self._sift_up(len(self.heap) - 1)
+    
+    def _sift_up(self, i):
+        while i > 0 and self.heap[self._parent(i)] < self.heap[i]:
+            p = self._parent(i)
+            self.heap[i], self.heap[p] = self.heap[p], self.heap[i]
+            i = p
+
+# Usage
+h = MaxHeap()
+for x in [3,1,6,5,2,4]:
+    h.insert(x)`,
+
+  java: `// Max-Heap with insert (sift up)
+import java.util.*;
+class MaxHeap {
+    private List<Integer> heap = new ArrayList<>();
+    private int parent(int i){ return (i - 1) / 2; }
+    public void insert(int val){
+        heap.add(val);
+        siftUp(heap.size() - 1);
+    }
+    private void siftUp(int i){
+        while(i > 0 && heap.get(parent(i)) < heap.get(i)){
+            int p = parent(i);
+            Collections.swap(heap, i, p);
+            i = p;
+        }
+    }
+}
+
+// Usage
+// MaxHeap h = new MaxHeap();
+// for(int x : new int[]{3,1,6,5,2,4}) h.insert(x);`
+};
+
 export default function HeapInsertPage() {
   return (
     <AlgorithmPageTemplate
@@ -100,6 +168,7 @@ export default function HeapInsertPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Data Structures"
+      code={codeSamples}
     />
   );
 }

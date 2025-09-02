@@ -88,6 +88,83 @@ const relatedProblems = [
   { id: 34, title: "Find First and Last Position of Element in Sorted Array", slug: "find-first-and-last-position-of-element-in-sorted-array", difficulty: "Medium" as const }
 ];
 
+const codeSamples: Record<string, string> = {
+  javascript: `function binarySearch(arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
+    
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        
+        if (arr[mid] === target) {
+            return mid; // Found target
+        } else if (arr[mid] < target) {
+            left = mid + 1; // Search right half
+        } else {
+            right = mid - 1; // Search left half
+        }
+    }
+    
+    return -1; // Target not found
+}
+
+// Example usage
+const sortedArr = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19];
+console.log("Array:", sortedArr);
+console.log("Search for 7:", binarySearch(sortedArr, 7)); // Output: 3
+console.log("Search for 4:", binarySearch(sortedArr, 4)); // Output: -1`,
+
+  python: `def binary_search(arr, target):
+    left = 0
+    right = len(arr) - 1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if arr[mid] == target:
+            return mid  # Found target
+        elif arr[mid] < target:
+            left = mid + 1  # Search right half
+        else:
+            right = mid - 1  # Search left half
+    
+    return -1  # Target not found
+
+# Example usage
+sorted_arr = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+print("Array:", sorted_arr)
+print("Search for 7:", binary_search(sorted_arr, 7))  # Output: 3
+print("Search for 4:", binary_search(sorted_arr, 4))  # Output: -1`,
+
+  java: `public class BinarySearch {
+    public static int binarySearch(int[] arr, int target) {
+        int left = 0;
+        int right = arr.length - 1;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2; // Avoid overflow
+            
+            if (arr[mid] == target) {
+                return mid; // Found target
+            } else if (arr[mid] < target) {
+                left = mid + 1; // Search right half
+            } else {
+                right = mid - 1; // Search left half
+            }
+        }
+        
+        return -1; // Target not found
+    }
+    
+    public static void main(String[] args) {
+        int[] sortedArr = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+        System.out.println("Array: " + java.util.Arrays.toString(sortedArr));
+        System.out.println("Search for 7: " + binarySearch(sortedArr, 7)); // Output: 3
+        System.out.println("Search for 4: " + binarySearch(sortedArr, 4)); // Output: -1
+    }
+}`
+};
+
 export default function BinarySearchPage() {
   return (
     <AlgorithmPageTemplate
@@ -100,6 +177,7 @@ export default function BinarySearchPage() {
       initialData={[5, 2, 9, 1, 6, 3, 8, 4, 7]}
       dataInputComponent={ArrayInput}
       pseudocode={pseudocode}
+      code={codeSamples}
       relatedProblems={relatedProblems}
       category="Searching Algorithm"
     />

@@ -66,6 +66,53 @@ const relatedProblems = [
   { id: 283, title: "Move Zeroes", slug: "move-zeroes", difficulty: "Easy" as const }
 ];
 
+const codeSamples: Record<string, string> = {
+  javascript: `function linearSearch(arr, target) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === target) {
+            return i; // Found target
+        }
+    }
+    return -1; // Target not found
+}
+
+// Example usage
+const arr = [64, 34, 25, 12, 22, 11, 90];
+console.log("Array:", arr);
+console.log("Search for 22:", linearSearch(arr, 22)); // e.g., Output: index
+console.log("Search for 100:", linearSearch(arr, 100)); // Output: -1`,
+
+  python: `def linear_search(arr, target):
+    for i in range(len(arr)):
+        if arr[i] == target:
+            return i  # Found target
+    return -1  # Target not found
+
+# Example usage
+arr = [64, 34, 25, 12, 22, 11, 90]
+print("Array:", arr)
+print("Search for 22:", linear_search(arr, 22))  # e.g., Output: index
+print("Search for 100:", linear_search(arr, 100))  # Output: -1`,
+
+  java: `public class LinearSearch {
+    public static int linearSearch(int[] arr, int target) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == target) {
+                return i; // Found target
+            }
+        }
+        return -1; // Target not found
+    }
+    
+    public static void main(String[] args) {
+        int[] arr = {64, 34, 25, 12, 22, 11, 90};
+        System.out.println("Array: " + java.util.Arrays.toString(arr));
+        System.out.println("Search for 22: " + linearSearch(arr, 22)); // e.g., Output: index
+        System.out.println("Search for 100: " + linearSearch(arr, 100)); // Output: -1
+    }
+}`
+};
+
 export default function LinearSearchPage() {
   return (
     <AlgorithmPageTemplate
@@ -78,6 +125,7 @@ export default function LinearSearchPage() {
       initialData={[64, 34, 25, 12, 22, 11, 90]}
       dataInputComponent={ArrayInput}
       pseudocode={pseudocode}
+      code={codeSamples}
       relatedProblems={relatedProblems}
       category="Searching Algorithm"
     />

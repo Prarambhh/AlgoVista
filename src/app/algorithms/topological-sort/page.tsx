@@ -191,6 +191,69 @@ const relatedProblems = [
   }
 ];
 
+const codeSamples = {
+  "JavaScript": `function topologicalSort(n, edges) {
+  const adj = Array.from({ length: n }, () => []);
+  const indeg = Array(n).fill(0);
+  for (const [u, v] of edges) {
+    adj[u].push(v);
+    indeg[v]++;
+  }
+  const queue = [];
+  for (let i = 0; i < n; i++) if (indeg[i] === 0) queue.push(i);
+  const order = [];
+  while (queue.length) {
+    const u = queue.shift();
+    order.push(u);
+    for (const v of adj[u]) {
+      indeg[v]--;
+      if (indeg[v] === 0) queue.push(v);
+    }
+  }
+  return order.length === n ? order : [];
+}`,
+  "Python": `from collections import deque
+
+def topological_sort(n, edges):
+    adj = [[] for _ in range(n)]
+    indeg = [0] * n
+    for u, v in edges:
+        adj[u].append(v)
+        indeg[v] += 1
+    q = deque([i for i in range(n) if indeg[i] == 0])
+    order = []
+    while q:
+        u = q.popleft()
+        order.append(u)
+        for v in adj[u]:
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                q.append(v)
+    return order if len(order) == n else []`,
+  "Java": `import java.util.*;
+
+public static List<Integer> topologicalSort(int n, int[][] edges) {
+    List<List<Integer>> adj = new ArrayList<>();
+    for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+    int[] indeg = new int[n];
+    for (int[] e : edges) {
+        adj.get(e[0]).add(e[1]);
+        indeg[e[1]]++;
+    }
+    Deque<Integer> q = new ArrayDeque<>();
+    for (int i = 0; i < n; i++) if (indeg[i] == 0) q.offer(i);
+    List<Integer> order = new ArrayList<>();
+    while (!q.isEmpty()) {
+        int u = q.poll();
+        order.add(u);
+        for (int v : adj.get(u)) {
+            if (--indeg[v] == 0) q.offer(v);
+        }
+    }
+    return order.size() == n ? order : Collections.emptyList();
+}`
+};
+
 export default function TopologicalSortPage() {
   return (
     <AlgorithmPageTemplate
@@ -205,6 +268,7 @@ export default function TopologicalSortPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Graph Algorithms"
+      code={codeSamples}
     />
   );
 }

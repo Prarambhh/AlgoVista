@@ -253,11 +253,85 @@ const relatedProblems = [
   { id: 516, title: "Longest Palindromic Subsequence", slug: "longest-palindromic-subsequence", difficulty: "Medium" as const }
 ];
 
+const codeSamples = {
+  "JavaScript": `// Longest Common Subsequence - returns the LCS string
+function lcs(s1, s2) {
+  const m = s1.length, n = s2.length;
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+  
+  // Build length table
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (s1[i - 1] === s2[j - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;
+      else dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+    }
+  }
+  
+  // Reconstruct LCS string
+  let i = m, j = n;
+  const res = [];
+  while (i > 0 && j > 0) {
+    if (s1[i - 1] === s2[j - 1]) { res.push(s1[i - 1]); i--; j--; }
+    else if (dp[i - 1][j] >= dp[i][j - 1]) i--;
+    else j--;
+  }
+  return res.reverse().join('');
+}`,
+  "Python": `# Longest Common Subsequence - returns the LCS string
+def lcs(s1: str, s2: str) -> str:
+    m, n = len(s1), len(s2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i - 1] == s2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    
+    i, j = m, n
+    res = []
+    while i > 0 and j > 0:
+        if s1[i - 1] == s2[j - 1]:
+            res.append(s1[i - 1])
+            i -= 1; j -= 1
+        elif dp[i - 1][j] >= dp[i][j - 1]:
+            i -= 1
+        else:
+            j -= 1
+    return ''.join(reversed(res))`,
+  "Java": `// Longest Common Subsequence - returns the LCS string
+public static String lcs(String s1, String s2) {
+    int m = s1.length(), n = s2.length();
+    int[][] dp = new int[m + 1][n + 1];
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (s1.charAt(i - 1) == s2.charAt(j - 1))
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            else
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+        }
+    }
+    int i = m, j = n;
+    StringBuilder sb = new StringBuilder();
+    while (i > 0 && j > 0) {
+        if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+            sb.append(s1.charAt(i - 1));
+            i--; j--;
+        } else if (dp[i - 1][j] >= dp[i][j - 1]) {
+            i--;
+        } else {
+            j--;
+        }
+    }
+    return sb.reverse().toString();
+}`
+};
 export default function LCSPage() {
   return (
     <AlgorithmPageTemplate
-      title="Longest Common Subsequence (LCS)"
-      description="Find the longest subsequence common to two sequences using dynamic programming. The algorithm builds a 2D table and uses backtracking to reconstruct the actual LCS string."
+      title="Longest Common Subsequence"
+      description="Find the longest common subsequence between two strings using dynamic programming. Visualizes the DP table build and the backtracking path to reconstruct the sequence."
       timeComplexity="O(m × n)"
       spaceComplexity="O(m × n)"
       visualizationComponent={LCSVisualizerComponent}
@@ -267,6 +341,7 @@ export default function LCSPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Dynamic Programming"
+      code={codeSamples}
     />
   );
 }

@@ -191,6 +191,41 @@ const relatedProblems = [
   { id: 1746, title: "Maximum Subarray Sum After One Operation", slug: "maximum-subarray-sum-after-one-operation", difficulty: "Medium" as const }
 ];
 
+const codeSamples = {
+  "JavaScript": `// Kadane's Algorithm - Maximum Subarray Sum
+function kadane(arr) {
+  if (arr.length === 0) return 0;
+  let maxSoFar = arr[0];
+  let current = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    current = Math.max(arr[i], current + arr[i]);
+    maxSoFar = Math.max(maxSoFar, current);
+  }
+  return maxSoFar;
+}`,
+  "Python": `# Kadane's Algorithm - Maximum Subarray Sum
+def kadane(arr):
+    if not arr:
+        return 0
+    max_so_far = arr[0]
+    current = arr[0]
+    for x in arr[1:]:
+        current = max(x, current + x)
+        max_so_far = max(max_so_far, current)
+    return max_so_far`,
+  "Java": `// Kadane's Algorithm - Maximum Subarray Sum
+public static int kadane(int[] arr) {
+    if (arr.length == 0) return 0;
+    int maxSoFar = arr[0];
+    int current = arr[0];
+    for (int i = 1; i < arr.length; i++) {
+        current = Math.max(arr[i], current + arr[i]);
+        maxSoFar = Math.max(maxSoFar, current);
+    }
+    return maxSoFar;
+}`
+};
+
 export default function KadanePage() {
   return (
     <AlgorithmPageTemplate
@@ -204,7 +239,8 @@ export default function KadanePage() {
       dataInputComponent={KadaneInput}
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
-      category="Arrays"
+      category="Dynamic Programming"
+      code={codeSamples}
     />
   );
 }

@@ -99,6 +99,62 @@ const pseudocode = [
   "  return arr"
 ];
 
+const codeSamples = {
+  JavaScript: `function radixSort(arr) {
+  const max = Math.max(...arr);
+  const maxDigits = max.toString().length;
+  let output = [...arr];
+  for (let d = 0; d < maxDigits; d++) {
+    const buckets = Array.from({ length: 10 }, () => []);
+    for (const num of output) {
+      const digit = Math.floor(num / Math.pow(10, d)) % 10;
+      buckets[digit].push(num);
+    }
+    output = [].concat(...buckets);
+  }
+  return output;
+}`,
+  Python: `def radix_sort(arr):
+  if not arr:
+      return arr
+  max_val = max(arr)
+  exp = 1
+  output = list(arr)
+  while max_val // exp > 0:
+      buckets = [[] for _ in range(10)]
+      for num in output:
+          digit = (num // exp) % 10
+          buckets[digit].append(num)
+      output = [num for bucket in buckets for num in bucket]
+      exp *= 10
+  return output`,
+  Java: `import java.util.*;
+public class RadixSort {
+  public static void radixSort(int[] arr) {
+      if (arr.length == 0) return;
+      int max = Arrays.stream(arr).max().getAsInt();
+      int exp = 1;
+      int[] output = Arrays.copyOf(arr, arr.length);
+      while (max / exp > 0) {
+          int[] count = new int[10];
+          for (int num : output) {
+              int digit = (num / exp) % 10;
+              count[digit]++;
+          }
+          for (int i = 1; i < 10; i++) count[i] += count[i - 1];
+          int[] temp = new int[output.length];
+          for (int i = output.length - 1; i >= 0; i--) {
+              int digit = (output[i] / exp) % 10;
+              temp[--count[digit]] = output[i];
+          }
+          output = temp;
+          exp *= 10;
+      }
+      System.arraycopy(output, 0, arr, 0, arr.length);
+  }
+}`
+};
+
 export default function RadixSortPage() {
   const relatedProblems = leetcodeProblems["radix-sort"] || [];
 
@@ -113,6 +169,7 @@ export default function RadixSortPage() {
       initialData={[170, 45, 75, 90, 2, 802, 24, 66]}
       dataInputComponent={ArrayInput}
       pseudocode={pseudocode}
+      code={codeSamples}
       relatedProblems={relatedProblems}
       category="Sorting Algorithm"
     />

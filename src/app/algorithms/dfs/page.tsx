@@ -122,6 +122,55 @@ const relatedProblems = [
   { id: 207, title: "Course Schedule", slug: "course-schedule", difficulty: "Medium" as const }
 ];
 
+const codeSamples = {
+  "JavaScript": `function dfs(graph, start) {
+  const visited = new Set();
+  const order = [];
+  function visit(u) {
+    visited.add(u);
+    order.push(u);
+    for (const v of (graph[u] || [])) {
+      if (!visited.has(v)) visit(v);
+    }
+  }
+  visit(start);
+  return order;
+}`,
+  "Python": `def dfs(graph, start):
+    visited = set()
+    order = []
+    def visit(u):
+        visited.add(u)
+        order.append(u)
+        for v in graph.get(u, []):
+            if v not in visited:
+                visit(v)
+    visit(start)
+    return order`,
+  "Java": `import java.util.*;
+
+class Graph {
+    private final Map<Integer, List<Integer>> adj = new HashMap<>();
+    public void addEdge(int u, int v) {
+        adj.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
+        adj.computeIfAbsent(v, k -> new ArrayList<>()).add(u); // undirected
+    }
+    public List<Integer> dfs(int start) {
+        List<Integer> order = new ArrayList<>();
+        Set<Integer> visited = new HashSet<>();
+        dfsUtil(start, visited, order);
+        return order;
+    }
+    private void dfsUtil(int u, Set<Integer> visited, List<Integer> order) {
+        visited.add(u);
+        order.add(u);
+        for (int v : adj.getOrDefault(u, Collections.emptyList())) {
+            if (!visited.contains(v)) dfsUtil(v, visited, order);
+        }
+    }
+}`
+};
+
 export default function DFSPage() {
   return (
     <AlgorithmPageTemplate
@@ -136,6 +185,7 @@ export default function DFSPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Graph Algorithms"
+      code={codeSamples}
     />
   );
 }

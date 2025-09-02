@@ -103,8 +103,17 @@ export default function MatrixChainMultiplicationPage() {
       initialData={[[10, 20, 30, 40]]}
       dataInputComponent={DimensionsInput}
       pseudocode={pseudocode}
-      relatedProblems={relatedProblems}
-      category="Dynamic Programming"
-    />
+   code={codeSamples}
+   relatedProblems={relatedProblems}
+   category="Dynamic Programming"
+ />
   );
 }
+
+const codeSamples = {
+  javascript: `// Matrix Chain Multiplication - JavaScript\n// Returns minimum cost and optimal parenthesization\nfunction matrixChainOrder(p) {\n  const n = p.length - 1;\n  if (n <= 1) return { cost: 0, order: n === 1 ? 'A1' : '' };\n\n  const m = Array.from({ length: n + 1 }, () => Array(n + 1).fill(0));\n  const s = Array.from({ length: n + 1 }, () => Array(n + 1).fill(0));\n\n  for (let L = 2; L <= n; L++) {\n    for (let i = 1; i <= n - L + 1; i++) {\n      const j = i + L - 1;\n      m[i][j] = Number.POSITIVE_INFINITY;\n      for (let k = i; k <= j - 1; k++) {\n        const q = m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j];\n        if (q < m[i][j]) {\n          m[i][j] = q;\n          s[i][j] = k;\n        }\n      }\n    }\n  }\n\n  function build(i, j) {\n    if (i === j) return 'A' + i;\n    const k = s[i][j];\n    return '(' + build(i, k) + ' x ' + build(k + 1, j) + ')';\n  }\n\n  return { cost: m[1][n], order: build(1, n) };\n}\n\n// Example:\n// const p = [10, 20, 30, 40];\n// console.log(matrixChainOrder(p));`,
+
+  python: `# Matrix Chain Multiplication - Python\n# Returns minimum cost and optimal parenthesization\nfrom math import inf\n\ndef matrix_chain_order(p):\n    n = len(p) - 1\n    if n <= 1:\n        return {"cost": 0, "order": "A1" if n == 1 else ""}\n\n    m = [[0] * (n + 1) for _ in range(n + 1)]\n    s = [[0] * (n + 1) for _ in range(n + 1)]\n\n    for L in range(2, n + 1):\n        for i in range(1, n - L + 2):\n            j = i + L - 1\n            m[i][j] = inf\n            for k in range(i, j):\n                q = m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j]\n                if q < m[i][j]:\n                    m[i][j] = q\n                    s[i][j] = k\n\n    def build(i, j):\n        if i == j:\n            return f"A{i}"\n        k = s[i][j]\n        return f"({build(i, k)} x {build(k + 1, j)})"\n\n    return {"cost": m[1][n], "order": build(1, n)}\n\n# Example:\n# p = [10, 20, 30, 40]\n# print(matrix_chain_order(p))`,
+
+  java: `// Matrix Chain Multiplication - Java\n// Returns minimum cost and optimal parenthesization\npublic class MatrixChainMultiplication {\n    public static class Result {\n        public int cost;\n        public String order;\n        Result(int c, String o) { cost = c; order = o; }\n    }\n\n    public static Result matrixChainOrder(int[] p) {\n        int n = p.length - 1;\n        if (n <= 1) return new Result(0, n == 1 ? "A1" : "");\n\n        int[][] m = new int[n + 1][n + 1];\n        int[][] s = new int[n + 1][n + 1];\n\n        for (int L = 2; L <= n; L++) {\n            for (int i = 1; i <= n - L + 1; i++) {\n                int j = i + L - 1;\n                m[i][j] = Integer.MAX_VALUE;\n                for (int k = i; k <= j - 1; k++) {\n                    long q = (long)m[i][k] + m[k + 1][j] + (long)p[i - 1] * p[k] * p[j];\n                    if (q < m[i][j]) {\n                        m[i][j] = (int) q;\n                        s[i][j] = k;\n                    }\n                }\n            }\n        }\n\n        return new Result(m[1][n], build(1, n, s));\n    }\n\n    private static String build(int i, int j, int[][] s) {\n        if (i == j) return "A" + i;\n        int k = s[i][j];\n        return "(" + build(i, k, s) + " x " + build(k + 1, j, s) + ")";\n    }\n\n    // Example:\n    // int[] p = {10, 20, 30, 40};\n    // Result r = matrixChainOrder(p);\n    // System.out.println(r.cost + " " + r.order);\n}`
+};

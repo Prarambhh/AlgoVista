@@ -184,11 +184,101 @@ const relatedProblems = [
   }
 ];
 
+const codeSamples = {
+  "JavaScript": `function prim(graph) {
+  const n = graph.length;
+  const visited = Array(n).fill(false);
+  const minEdge = Array(n).fill(Infinity);
+  minEdge[0] = 0;
+  const mst = [];
+  let totalWeight = 0;
+  
+  for (let i = 0; i < n; i++) {
+    let u = -1;
+    for (let v = 0; v < n; v++) {
+      if (!visited[v] && (u === -1 || minEdge[v] < minEdge[u])) {
+        u = v;
+      }
+    }
+    
+    visited[u] = true;
+    totalWeight += minEdge[u];
+    
+    for (let v = 0; v < n; v++) {
+      if (!visited[v] && graph[u][v] < minEdge[v]) {
+        minEdge[v] = graph[u][v];
+      }
+    }
+  }
+  
+  return totalWeight;
+}`,
+  "Python": `import heapq
+
+def prim(graph):
+    n = len(graph)
+    visited = [False] * n
+    min_heap = [(0, 0)]  # (weight, vertex)
+    total_weight = 0
+    mst_edges = []
+    
+    while min_heap:
+        weight, u = heapq.heappop(min_heap)
+        
+        if visited[u]:
+            continue
+            
+        visited[u] = True
+        total_weight += weight
+        
+        for v in range(n):
+            if not visited[v] and graph[u][v] > 0:
+                heapq.heappush(min_heap, (graph[u][v], v))
+    
+    return total_weight`,
+  "Java": `import java.util.*;
+
+class Edge {
+    int to, weight;
+    Edge(int to, int weight) {
+        this.to = to;
+        this.weight = weight;
+    }
+}
+
+public static int prim(List<List<Edge>> graph) {
+    int n = graph.size();
+    boolean[] visited = new boolean[n];
+    PriorityQueue<Edge> pq = new PriorityQueue<>((a, b) -> a.weight - b.weight);
+    
+    pq.offer(new Edge(0, 0));
+    int totalWeight = 0;
+    
+    while (!pq.isEmpty()) {
+        Edge curr = pq.poll();
+        int u = curr.to;
+        
+        if (visited[u]) continue;
+        
+        visited[u] = true;
+        totalWeight += curr.weight;
+        
+        for (Edge edge : graph.get(u)) {
+            if (!visited[edge.to]) {
+                pq.offer(edge);
+            }
+        }
+    }
+    
+    return totalWeight;
+}`
+};
+
 export default function PrimPage() {
   return (
     <AlgorithmPageTemplate
       title="Prim's MST"
-      description="Prim's algorithm builds a minimum spanning tree by starting from a vertex and greedily adding the minimum weight edge that connects to a new vertex."
+      description="Prim's algorithm grows a minimum spanning tree starting from any vertex, always choosing the minimum weight edge that connects a new vertex to the tree."
       timeComplexity="O(V²) or O(E log V) with heap"
       spaceComplexity="O(V)"
       visualizationComponent={GraphVisualizerComponent}
@@ -198,6 +288,7 @@ export default function PrimPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Graph Algorithms"
+      code={codeSamples}
     />
   );
 }

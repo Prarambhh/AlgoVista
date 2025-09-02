@@ -114,6 +114,153 @@ const initialData: InorderData[] = [{
 // Related LeetCode problems
 const relatedProblems = leetcodeProblems["inorder-traversal"] || [];
 
+const codeSamples = {
+  javascript: `// Inorder Tree Traversal (Recursive)
+class TreeNode {
+  constructor(val, left = null, right = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+function inorderTraversal(root) {
+  const result = [];
+  function traverse(node) {
+    if (!node) return;
+    
+    traverse(node.left);   // Visit left subtree
+    result.push(node.val); // Visit root
+    traverse(node.right);  // Visit right subtree
+  }
+  
+  traverse(root);
+  return result;
+}
+
+// Iterative Inorder using Stack
+function inorderTraversalIterative(root) {
+  const result = [];
+  const stack = [];
+  let current = root;
+  
+  while (current || stack.length) {
+    // Go to leftmost node
+    while (current) {
+      stack.push(current);
+      current = current.left;
+    }
+    
+    // Process node
+    current = stack.pop();
+    result.push(current.val);
+    
+    // Move to right subtree
+    current = current.right;
+  }
+  
+  return result;
+}`,
+
+  python: `# Inorder Tree Traversal (Recursive)
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def inorder_traversal(root):
+    result = []
+    
+    def traverse(node):
+        if not node:
+            return
+        
+        traverse(node.left)   # Visit left subtree
+        result.append(node.val)  # Visit root
+        traverse(node.right)  # Visit right subtree
+    
+    traverse(root)
+    return result
+
+# Iterative Inorder using Stack
+def inorder_traversal_iterative(root):
+    result = []
+    stack = []
+    current = root
+    
+    while current or stack:
+        # Go to leftmost node
+        while current:
+            stack.append(current)
+            current = current.left
+        
+        # Process node
+        current = stack.pop()
+        result.append(current.val)
+        
+        # Move to right subtree
+        current = current.right
+    
+    return result`,
+
+  java: `// Inorder Tree Traversal (Recursive)
+import java.util.*;
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+public class InorderTraversal {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        traverse(root, result);
+        return result;
+    }
+    
+    private void traverse(TreeNode node, List<Integer> result) {
+        if (node == null) return;
+        
+        traverse(node.left, result);  // Visit left subtree
+        result.add(node.val);         // Visit root
+        traverse(node.right, result); // Visit right subtree
+    }
+    
+    // Iterative Inorder using Stack
+    public List<Integer> inorderTraversalIterative(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode current = root;
+        
+        while (current != null || !stack.isEmpty()) {
+            // Go to leftmost node
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+            
+            // Process node
+            current = stack.pop();
+            result.add(current.val);
+            
+            // Move to right subtree
+            current = current.right;
+        }
+        
+        return result;
+    }
+}`
+};
+
 export default function InorderTraversalPage() {
   return (
     <AlgorithmPageTemplate
@@ -128,6 +275,7 @@ export default function InorderTraversalPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Tree Algorithms"
+      code={codeSamples}
     />
   );
 }

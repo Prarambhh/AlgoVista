@@ -301,6 +301,300 @@ const relatedProblems = [
   { id: 706, title: "Design HashMap", slug: "design-hashmap", difficulty: "Easy" as const }
 ];
 
+const codeSamples = {
+  javascript: `// Hash Table Implementation with Chaining and Open Addressing
+class HashTable {
+  constructor(size = 7) {
+    this.size = size;
+    this.buckets = new Array(size);
+    this.strategy = 'chaining'; // or 'linear-probing', 'quadratic-probing'
+  }
+
+  // Hash function
+  hash(key) {
+    return ((key % this.size) + this.size) % this.size;
+  }
+
+  // Separate Chaining Implementation
+  insertChaining(key) {
+    const index = this.hash(key);
+    if (!this.buckets[index]) {
+      this.buckets[index] = [];
+    }
+    if (!this.buckets[index].includes(key)) {
+      this.buckets[index].push(key);
+    }
+  }
+
+  searchChaining(key) {
+    const index = this.hash(key);
+    return this.buckets[index] ? this.buckets[index].includes(key) : false;
+  }
+
+  deleteChaining(key) {
+    const index = this.hash(key);
+    if (this.buckets[index]) {
+      this.buckets[index] = this.buckets[index].filter(k => k !== key);
+    }
+  }
+
+  // Linear Probing Implementation
+  insertLinearProbing(key) {
+    for (let i = 0; i < this.size; i++) {
+      const index = (this.hash(key) + i) % this.size;
+      if (!this.buckets[index] || this.buckets[index] === 'DELETED') {
+        this.buckets[index] = key;
+        return true;
+      }
+    }
+    return false; // Table is full
+  }
+
+  searchLinearProbing(key) {
+    for (let i = 0; i < this.size; i++) {
+      const index = (this.hash(key) + i) % this.size;
+      if (this.buckets[index] === undefined) return false;
+      if (this.buckets[index] === key) return true;
+    }
+    return false;
+  }
+
+  deleteLinearProbing(key) {
+    for (let i = 0; i < this.size; i++) {
+      const index = (this.hash(key) + i) % this.size;
+      if (this.buckets[index] === undefined) return false;
+      if (this.buckets[index] === key) {
+        this.buckets[index] = 'DELETED';
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Quadratic Probing Implementation
+  insertQuadraticProbing(key) {
+    for (let i = 0; i < this.size; i++) {
+      const index = (this.hash(key) + i * i) % this.size;
+      if (!this.buckets[index] || this.buckets[index] === 'DELETED') {
+        this.buckets[index] = key;
+        return true;
+      }
+    }
+    return false;
+  }
+}`,
+
+  python: `# Hash Table Implementation with Chaining and Open Addressing
+class HashTable:
+    def __init__(self, size=7):
+        self.size = size
+        self.buckets = [None] * size
+        self.strategy = 'chaining'  # or 'linear-probing', 'quadratic-probing'
+    
+    def hash(self, key):
+        """Hash function that ensures non-negative result"""
+        return ((key % self.size) + self.size) % self.size
+    
+    # Separate Chaining Implementation
+    def insert_chaining(self, key):
+        """Insert key using separate chaining"""
+        index = self.hash(key)
+        if self.buckets[index] is None:
+            self.buckets[index] = []
+        if key not in self.buckets[index]:
+            self.buckets[index].append(key)
+    
+    def search_chaining(self, key):
+        """Search for key using separate chaining"""
+        index = self.hash(key)
+        return self.buckets[index] is not None and key in self.buckets[index]
+    
+    def delete_chaining(self, key):
+        """Delete key using separate chaining"""
+        index = self.hash(key)
+        if self.buckets[index] and key in self.buckets[index]:
+            self.buckets[index].remove(key)
+            return True
+        return False
+    
+    # Linear Probing Implementation
+    def insert_linear_probing(self, key):
+        """Insert key using linear probing"""
+        for i in range(self.size):
+            index = (self.hash(key) + i) % self.size
+            if self.buckets[index] is None or self.buckets[index] == 'DELETED':
+                self.buckets[index] = key
+                return True
+        return False  # Table is full
+    
+    def search_linear_probing(self, key):
+        """Search for key using linear probing"""
+        for i in range(self.size):
+            index = (self.hash(key) + i) % self.size
+            if self.buckets[index] is None:
+                return False
+            if self.buckets[index] == key:
+                return True
+        return False
+    
+    def delete_linear_probing(self, key):
+        """Delete key using linear probing with tombstone"""
+        for i in range(self.size):
+            index = (self.hash(key) + i) % self.size
+            if self.buckets[index] is None:
+                return False
+            if self.buckets[index] == key:
+                self.buckets[index] = 'DELETED'
+                return True
+        return False
+    
+    # Quadratic Probing Implementation
+    def insert_quadratic_probing(self, key):
+        """Insert key using quadratic probing"""
+        for i in range(self.size):
+            index = (self.hash(key) + i * i) % self.size
+            if self.buckets[index] is None or self.buckets[index] == 'DELETED':
+                self.buckets[index] = key
+                return True
+        return False
+    
+    def search_quadratic_probing(self, key):
+        """Search for key using quadratic probing"""
+        for i in range(self.size):
+            index = (self.hash(key) + i * i) % self.size
+            if self.buckets[index] is None:
+                return False
+            if self.buckets[index] == key:
+                return True
+        return False
+    
+    def delete_quadratic_probing(self, key):
+        """Delete key using quadratic probing with tombstone"""
+        for i in range(self.size):
+            index = (self.hash(key) + i * i) % self.size
+            if self.buckets[index] is None:
+                return False
+            if self.buckets[index] == key:
+                self.buckets[index] = 'DELETED'
+                return True
+        return False`,
+
+  java: `// Hash Table Implementation with Chaining and Open Addressing
+import java.util.*;
+
+public class HashTable {
+    private int size;
+    private Object[] buckets;
+    private String strategy;
+    
+    public HashTable(int size) {
+        this.size = size;
+        this.buckets = new Object[size];
+        this.strategy = "chaining"; // or "linear-probing", "quadratic-probing"
+    }
+    
+    // Hash function
+    private int hash(int key) {
+        return ((key % size) + size) % size;
+    }
+    
+    // Separate Chaining Implementation
+    @SuppressWarnings("unchecked")
+    public void insertChaining(int key) {
+        int index = hash(key);
+        if (buckets[index] == null) {
+            buckets[index] = new ArrayList<Integer>();
+        }
+        List<Integer> bucket = (List<Integer>) buckets[index];
+        if (!bucket.contains(key)) {
+            bucket.add(key);
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    public boolean searchChaining(int key) {
+        int index = hash(key);
+        if (buckets[index] == null) return false;
+        List<Integer> bucket = (List<Integer>) buckets[index];
+        return bucket.contains(key);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public boolean deleteChaining(int key) {
+        int index = hash(key);
+        if (buckets[index] == null) return false;
+        List<Integer> bucket = (List<Integer>) buckets[index];
+        return bucket.remove(Integer.valueOf(key));
+    }
+    
+    // Linear Probing Implementation
+    public boolean insertLinearProbing(int key) {
+        for (int i = 0; i < size; i++) {
+            int index = (hash(key) + i) % size;
+            if (buckets[index] == null || buckets[index].equals("DELETED")) {
+                buckets[index] = key;
+                return true;
+            }
+        }
+        return false; // Table is full
+    }
+    
+    public boolean searchLinearProbing(int key) {
+        for (int i = 0; i < size; i++) {
+            int index = (hash(key) + i) % size;
+            if (buckets[index] == null) return false;
+            if (buckets[index].equals(key)) return true;
+        }
+        return false;
+    }
+    
+    public boolean deleteLinearProbing(int key) {
+        for (int i = 0; i < size; i++) {
+            int index = (hash(key) + i) % size;
+            if (buckets[index] == null) return false;
+            if (buckets[index].equals(key)) {
+                buckets[index] = "DELETED";
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // Quadratic Probing Implementation
+    public boolean insertQuadraticProbing(int key) {
+        for (int i = 0; i < size; i++) {
+            int index = (hash(key) + i * i) % size;
+            if (buckets[index] == null || buckets[index].equals("DELETED")) {
+                buckets[index] = key;
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean searchQuadraticProbing(int key) {
+        for (int i = 0; i < size; i++) {
+            int index = (hash(key) + i * i) % size;
+            if (buckets[index] == null) return false;
+            if (buckets[index].equals(key)) return true;
+        }
+        return false;
+    }
+    
+    public boolean deleteQuadraticProbing(int key) {
+        for (int i = 0; i < size; i++) {
+            int index = (hash(key) + i * i) % size;
+            if (buckets[index] == null) return false;
+            if (buckets[index].equals(key)) {
+                buckets[index] = "DELETED";
+                return true;
+            }
+        }
+        return false;
+    }
+}`
+};
+
 export default function HashTableOperationsPage() {
   const defaultData: HashInputData = {
     strategy: "chaining",
@@ -328,6 +622,7 @@ export default function HashTableOperationsPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Data Structures"
+      code={codeSamples}
     />
   );
 }

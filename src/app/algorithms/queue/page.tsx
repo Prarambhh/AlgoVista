@@ -187,6 +187,63 @@ const relatedProblems = [
   { id: 346, title: "Moving Average from Data Stream", slug: "moving-average-from-data-stream", difficulty: "Easy" as const }
 ];
 
+const codeSamples = {
+  javascript: `// Queue implementation using array
+class Queue {
+  constructor(){ this.items = []; }
+  enqueue(x){ this.items.push(x); }
+  dequeue(){ if(this.isEmpty()) throw new Error('Underflow'); return this.items.shift(); }
+  front(){ return this.isEmpty() ? null : this.items[0]; }
+  rear(){ return this.isEmpty() ? null : this.items[this.items.length - 1]; }
+  isEmpty(){ return this.items.length === 0; }
+  size(){ return this.items.length; }
+}
+
+// Usage
+const q = new Queue();
+q.enqueue(1); q.enqueue(2); q.dequeue();`,
+
+  python: `# Queue implementation using collections.deque
+from collections import deque
+class Queue:
+    def __init__(self):
+        self.items = deque()
+    def enqueue(self, x):
+        self.items.append(x)
+    def dequeue(self):
+        if self.is_empty():
+            raise Exception('Underflow')
+        return self.items.popleft()
+    def front(self):
+        return None if self.is_empty() else self.items[0]
+    def rear(self):
+        return None if self.is_empty() else self.items[-1]
+    def is_empty(self):
+        return len(self.items) == 0
+    def size(self):
+        return len(self.items)
+
+# Usage
+q = Queue()
+q.enqueue(1); q.enqueue(2); q.dequeue();`,
+
+  java: `// Queue implementation using ArrayDeque
+import java.util.*;
+class QueueDS {
+    private Deque<Integer> queue = new ArrayDeque<>();
+    public void enqueue(int x){ queue.addLast(x); }
+    public int dequeue(){ if(queue.isEmpty()) throw new RuntimeException("Underflow"); return queue.removeFirst(); }
+    public Integer front(){ return queue.peekFirst(); }
+    public Integer rear(){ return queue.peekLast(); }
+    public boolean isEmpty(){ return queue.isEmpty(); }
+    public int size(){ return queue.size(); }
+}
+
+// Usage
+// QueueDS q = new QueueDS();
+// q.enqueue(1); q.enqueue(2); q.dequeue();`
+};
+
 export default function QueuePage() {
   return (
     <AlgorithmPageTemplate
@@ -201,6 +258,7 @@ export default function QueuePage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Data Structures"
+      code={codeSamples}
     />
   );
 }

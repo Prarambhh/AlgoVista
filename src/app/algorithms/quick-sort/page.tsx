@@ -135,6 +135,12 @@ const relatedProblems = [
   { id: 324, title: "Wiggle Sort II", slug: "wiggle-sort-ii", difficulty: "Medium" as const }
 ];
 
+const codeSamples: Record<string, string> = {
+  javascript: `function quickSort(arr, low = 0, high = arr.length - 1) {\n    if (low < high) {\n        const pivotIndex = partition(arr, low, high);\n        quickSort(arr, low, pivotIndex - 1);\n        quickSort(arr, pivotIndex + 1, high);\n    }\n    return arr;\n}\n\nfunction partition(arr, low, high) {\n    const pivot = arr[high]; // Choose last element as pivot\n    let i = low - 1; // Index of smaller element\n    \n    for (let j = low; j < high; j++) {\n        if (arr[j] <= pivot) {\n            i++;\n            [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap elements\n        }\n    }\n    \n    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]]; // Place pivot\n    return i + 1;\n}\n\n// Example usage\nconst arr = [64, 34, 25, 12, 22, 11, 90];\nconsole.log("Original:", arr);\nconsole.log("Sorted:", quickSort([...arr]));`,
+  python: `def quick_sort(arr, low=0, high=None):\n    if high is None:\n        high = len(arr) - 1\n    \n    if low < high:\n        pivot_index = partition(arr, low, high)\n        quick_sort(arr, low, pivot_index - 1)\n        quick_sort(arr, pivot_index + 1, high)\n    \n    return arr\n\ndef partition(arr, low, high):\n    pivot = arr[high]  # Choose last element as pivot\n    i = low - 1  # Index of smaller element\n    \n    for j in range(low, high):\n        if arr[j] <= pivot:\n            i += 1\n            arr[i], arr[j] = arr[j], arr[i]  # Swap elements\n    \n    arr[i + 1], arr[high] = arr[high], arr[i + 1]  # Place pivot\n    return i + 1\n\n# Example usage\narr = [64, 34, 25, 12, 22, 11, 90]\nprint("Original:", arr)\nprint("Sorted:", quick_sort(arr.copy()))`,
+  java: `import java.util.Arrays;\n\npublic class QuickSort {\n    public static void quickSort(int[] arr, int low, int high) {\n        if (low < high) {\n            int pivotIndex = partition(arr, low, high);\n            quickSort(arr, low, pivotIndex - 1);\n            quickSort(arr, pivotIndex + 1, high);\n        }\n    }\n    \n    private static int partition(int[] arr, int low, int high) {\n        int pivot = arr[high]; // Choose last element as pivot\n        int i = low - 1; // Index of smaller element\n        \n        for (int j = low; j < high; j++) {\n            if (arr[j] <= pivot) {\n                i++;\n                int temp = arr[i];\n                arr[i] = arr[j];\n                arr[j] = temp;\n            }\n        }\n        \n        int temp = arr[i + 1];\n        arr[i + 1] = arr[high];\n        arr[high] = temp;\n        \n        return i + 1;\n    }\n    \n    public static void main(String[] args) {\n        int[] arr = {64, 34, 25, 12, 22, 11, 90};\n        System.out.println("Original: " + java.util.Arrays.toString(arr));\n        quickSort(arr, 0, arr.length - 1);\n        System.out.println("Sorted: " + java.util.Arrays.toString(arr));\n    }\n}`
+};
+
 export default function QuickSortPage() {
   return (
     <AlgorithmPageTemplate
@@ -147,6 +153,7 @@ export default function QuickSortPage() {
       initialData={[64, 34, 25, 12, 22, 11, 90]}
       dataInputComponent={ArrayInput}
       pseudocode={pseudocode}
+      code={codeSamples}
       relatedProblems={relatedProblems}
       category="Sorting Algorithm"
     />

@@ -132,6 +132,54 @@ const relatedProblems = [
   }
 ];
 
+const codeSamples = {
+  "JavaScript": `function floydWarshall(graph) {
+  const dist = graph.map(row => row.slice());
+  const n = dist.length;
+  for (let k = 0; k < n; k++) {
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        if (dist[i][k] + dist[k][j] < dist[i][j]) {
+          dist[i][j] = dist[i][k] + dist[k][j];
+        }
+      }
+    }
+  }
+  return dist;
+}`,
+  "Python": `def floyd_warshall(graph):
+    dist = [row[:] for row in graph]
+    n = len(dist)
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    return dist`,
+  "Java": `public class FloydWarshall {
+    static final int INF = 1_000_000_000;
+    public static int[][] floydWarshall(int[][] graph) {
+        int n = graph.length;
+        int[][] dist = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                dist[i][j] = graph[i][j];
+            }
+        }
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (dist[i][k] + dist[k][j] < dist[i][j]) {
+                        dist[i][j] = dist[i][k] + dist[k][j];
+                    }
+                }
+            }
+        }
+        return dist;
+    }
+}`
+};
+
 export default function FloydWarshallPage() {
   return (
     <AlgorithmPageTemplate
@@ -146,6 +194,7 @@ export default function FloydWarshallPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Graph Algorithms"
+      code={codeSamples}
     />
   );
 }

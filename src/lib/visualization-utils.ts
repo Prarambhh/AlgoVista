@@ -445,7 +445,7 @@ export class GraphVisualizer {
           .attr("text-anchor", "middle")
           .attr("dy", "0.35em")
           .style("fill", "#ffffff")
-          .style("font-size", "10px")
+          .style("font-size", "12px")
           .style("font-weight", "bold")
           .style("background", "#000000")
           .text(edge.weight);
@@ -583,8 +583,8 @@ export class GraphVisualizer {
     return 2;
   }
 
-  private getEdgeDash(edge: GraphEdge, step?: VisualizationStep): string | undefined {
-    if (!step) return undefined;
+  private getEdgeDash(edge: GraphEdge, step?: VisualizationStep): string | null {
+    if (!step) return null;
 
     if (step.data?.highlightEdges &&
         step.data.highlightEdges.some((e: any) =>
@@ -594,7 +594,7 @@ export class GraphVisualizer {
       return "4,2"; // dashed for traversal
     }
 
-    return undefined; // solid by default and for created edges
+    return null; // solid by default and for created edges
   }
 
   private getNodeStrokeColor(node: GraphNode, step?: VisualizationStep): string {

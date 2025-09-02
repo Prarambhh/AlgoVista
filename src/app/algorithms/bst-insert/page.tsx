@@ -221,6 +221,194 @@ export default function BSTInsertPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Tree Algorithms"
+      code={codeSamples}
     />
   );
 }
+
+const codeSamples = {
+  javascript: `// Binary Search Tree Insert - JavaScript
+      class TreeNode {
+        constructor(val, left = null, right = null) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+        }
+      }
+      
+      function insertIntoBST(root, val) {
+        // If tree is empty, create new node
+        if (!root) {
+          return new TreeNode(val);
+        }
+        
+        // If value is less than current node, go left
+        if (val < root.val) {
+          root.left = insertIntoBST(root.left, val);
+        }
+        // If value is greater than current node, go right
+        else if (val > root.val) {
+          root.right = insertIntoBST(root.right, val);
+        }
+        // If value equals current node, don't insert (no duplicates)
+        
+        return root;
+      }
+      
+      // Iterative approach
+      function insertIntoBSTIterative(root, val) {
+        if (!root) {
+          return new TreeNode(val);
+        }
+        
+        let current = root;
+        while (true) {
+          if (val < current.val) {
+            if (!current.left) {
+              current.left = new TreeNode(val);
+              break;
+            }
+            current = current.left;
+          } else if (val > current.val) {
+            if (!current.right) {
+              current.right = new TreeNode(val);
+              break;
+            }
+            current = current.right;
+          } else {
+            // Value already exists, don't insert
+            break;
+          }
+        }
+        
+        return root;
+      }`,
+      
+      python: `# Binary Search Tree Insert - Python
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val
+            self.left = left
+            self.right = right
+    
+    def insert_into_bst(root, val):
+        """
+        Insert a value into BST (recursive approach)
+        Time: O(log n) average, O(n) worst case
+        Space: O(log n) average, O(n) worst case (recursion stack)
+        """
+        # If tree is empty, create new node
+        if not root:
+            return TreeNode(val)
+        
+        # If value is less than current node, go left
+        if val < root.val:
+            root.left = insert_into_bst(root.left, val)
+        # If value is greater than current node, go right
+        elif val > root.val:
+            root.right = insert_into_bst(root.right, val)
+        # If value equals current node, don't insert (no duplicates)
+        
+        return root
+    
+    def insert_into_bst_iterative(root, val):
+        """
+        Insert a value into BST (iterative approach)
+        Time: O(log n) average, O(n) worst case
+        Space: O(1)
+        """
+        if not root:
+            return TreeNode(val)
+        
+        current = root
+        while True:
+            if val < current.val:
+                if not current.left:
+                    current.left = TreeNode(val)
+                    break
+                current = current.left
+            elif val > current.val:
+                if not current.right:
+                    current.right = TreeNode(val)
+                    break
+                current = current.right
+            else:
+                # Value already exists, don't insert
+                break
+        
+        return root`,
+      
+      java: `// Binary Search Tree Insert - Java
+    class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+    
+    public class BSTInsert {
+        /**
+         * Insert a value into BST (recursive approach)
+         * Time: O(log n) average, O(n) worst case
+         * Space: O(log n) average, O(n) worst case (recursion stack)
+         */
+        public TreeNode insertIntoBST(TreeNode root, int val) {
+            // If tree is empty, create new node
+            if (root == null) {
+                return new TreeNode(val);
+            }
+            
+            // If value is less than current node, go left
+            if (val < root.val) {
+                root.left = insertIntoBST(root.left, val);
+            }
+            // If value is greater than current node, go right
+            else if (val > root.val) {
+                root.right = insertIntoBST(root.right, val);
+            }
+            // If value equals current node, don't insert (no duplicates)
+            
+            return root;
+        }
+        
+        /**
+         * Insert a value into BST (iterative approach)
+         * Time: O(log n) average, O(n) worst case
+         * Space: O(1)
+         */
+        public TreeNode insertIntoBSTIterative(TreeNode root, int val) {
+            if (root == null) {
+                return new TreeNode(val);
+            }
+            
+            TreeNode current = root;
+            while (true) {
+                if (val < current.val) {
+                    if (current.left == null) {
+                        current.left = new TreeNode(val);
+                        break;
+                    }
+                    current = current.left;
+                } else if (val > current.val) {
+                    if (current.right == null) {
+                        current.right = new TreeNode(val);
+                        break;
+                    }
+                    current = current.right;
+                } else {
+                    // Value already exists, don't insert
+                    break;
+                }
+            }
+            
+            return root;
+         }
+     }`
+};

@@ -99,6 +99,12 @@ const relatedProblems = [
   { id: 148, title: "Sort List", slug: "sort-list", difficulty: "Medium" as const }
 ];
 
+const codeSamples: Record<string, string> = {
+  javascript: `function insertionSort(arr) {\n  const a = [...arr];\n  for (let i = 1; i < a.length; i++) {\n    const key = a[i];\n    let j = i - 1;\n    while (j >= 0 && a[j] > key) {\n      a[j + 1] = a[j];\n      j--;\n    }\n    a[j + 1] = key;\n  }\n  return a;\n}\n\nconsole.log(insertionSort([64, 34, 25, 12, 22, 11, 90]));`,
+  python: `def insertion_sort(arr):\n    a = arr.copy()\n    for i in range(1, len(a)):\n        key = a[i]\n        j = i - 1\n        while j >= 0 and a[j] > key:\n            a[j + 1] = a[j]\n            j -= 1\n        a[j + 1] = key\n    return a\n\nprint(insertion_sort([64, 34, 25, 12, 22, 11, 90]))`,
+  java: `import java.util.Arrays;\n\npublic class InsertionSort {\n    public static void insertionSort(int[] arr) {\n        for (int i = 1; i < arr.length; i++) {\n            int key = arr[i];\n            int j = i - 1;\n            while (j >= 0 && arr[j] > key) {\n                arr[j + 1] = arr[j];\n                j--;\n            }\n            arr[j + 1] = key;\n        }\n    }\n\n    public static void main(String[] args) {\n        int[] arr = {64, 34, 25, 12, 22, 11, 90};\n        insertionSort(arr);\n        System.out.println(Arrays.toString(arr));\n    }\n}`
+};
+
 export default function InsertionSortPage() {
   return (
     <AlgorithmPageTemplate
@@ -111,6 +117,7 @@ export default function InsertionSortPage() {
       initialData={[64, 34, 25, 12, 22, 11, 90]}
       dataInputComponent={ArrayInput}
       pseudocode={pseudocode}
+      code={codeSamples}
       relatedProblems={relatedProblems}
       category="Sorting Algorithm"
     />

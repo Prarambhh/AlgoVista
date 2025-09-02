@@ -109,6 +109,102 @@ const initialData: LevelOrderData[] = [{
 // Related LeetCode problems
 const relatedProblems = leetcodeProblems["level-order-traversal"] || [];
 
+const codeSamples = {
+  javascript: `// Level-order (BFS) Traversal of Binary Tree
+class TreeNode {
+  constructor(val, left = null, right = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+function levelOrder(root) {
+  const result = [];
+  if (!root) return result;
+  const queue = [root];
+  
+  while (queue.length) {
+    const size = queue.length;
+    const level = [];
+    for (let i = 0; i < size; i++) {
+      const node = queue.shift();
+      level.push(node.val);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    result.push(level);
+  }
+  return result;
+}`,
+
+  python: `# Level-order (BFS) Traversal of Binary Tree
+from collections import deque
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def level_order(root):
+    result = []
+    if not root:
+        return result
+    queue = deque([root])
+    
+    while queue:
+        size = len(queue)
+        level = []
+        for _ in range(size):
+            node = queue.popleft()
+            level.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        result.append(level)
+    return result`,
+
+  java: `// Level-order (BFS) Traversal of Binary Tree
+import java.util.*;
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+public class LevelOrderTraversal {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) return result;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> level = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                level.add(node.val);
+                if (node.left != null) queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
+            }
+            result.add(level);
+        }
+        return result;
+    }
+}`
+};
+
 export default function LevelOrderTraversalPage() {
   return (
     <AlgorithmPageTemplate
@@ -123,6 +219,7 @@ export default function LevelOrderTraversalPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Tree Algorithms"
+      code={codeSamples}
     />
   );
 }

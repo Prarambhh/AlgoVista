@@ -106,6 +106,93 @@ const pseudocode = [
   "  return arr"
 ];
 
+const codeSamples = {
+  JavaScript: `function countingSort(arr) {
+  if (arr.length === 0) return arr;
+  const min = Math.min(...arr);
+  const max = Math.max(...arr);
+  const range = max - min + 1;
+  const count = new Array(range).fill(0);
+  const output = new Array(arr.length).fill(0);
+
+  // Count occurrences
+  for (let i = 0; i < arr.length; i++) {
+    count[arr[i] - min]++;
+  }
+
+  // Accumulate counts
+  for (let i = 1; i < range; i++) {
+    count[i] += count[i - 1];
+  }
+
+  // Build output (stable)
+  for (let i = arr.length - 1; i >= 0; i--) {
+    const val = arr[i];
+    output[count[val - min] - 1] = val;
+    count[val - min]--;
+  }
+
+  // Copy back
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = output[i];
+  }
+  return arr;
+}`,
+  Python: `def counting_sort(arr):
+  if not arr:
+      return arr
+  _min = min(arr)
+  _max = max(arr)
+  rng = _max - _min + 1
+  count = [0] * rng
+  output = [0] * len(arr)
+
+  # Count occurrences
+  for v in arr:
+      count[v - _min] += 1
+
+  # Accumulate counts
+  for i in range(1, rng):
+      count[i] += count[i - 1]
+
+  # Build output (stable)
+  for i in range(len(arr) - 1, -1, -1):
+      v = arr[i]
+      output[count[v - _min] - 1] = v
+      count[v - _min] -= 1
+
+  # Copy back
+  for i in range(len(arr)):
+      arr[i] = output[i]
+  return arr`,
+  Java: `public class CountingSort {
+  public static void countingSort(int[] arr) {
+      if (arr.length == 0) return;
+      int min = arr[0], max = arr[0];
+      for (int v : arr) { if (v < min) min = v; if (v > max) max = v; }
+      int range = max - min + 1;
+      int[] count = new int[range];
+      int[] output = new int[arr.length];
+
+      // Count occurrences
+      for (int v : arr) count[v - min]++;
+
+      // Accumulate counts
+      for (int i = 1; i < range; i++) count[i] += count[i - 1];
+
+      // Build output (stable)
+      for (int i = arr.length - 1; i >= 0; i--) {
+          int v = arr[i];
+          output[count[v - min] - 1] = v;
+          count[v - min]--;
+      }
+
+      // Copy back
+      for (int i = 0; i < arr.length; i++) arr[i] = output[i];
+  }
+}`
+};
+
 export default function CountingSortPage() {
   const relatedProblems = leetcodeProblems["counting-sort"] || [];
 
@@ -120,6 +207,7 @@ export default function CountingSortPage() {
       initialData={[4, 2, 2, 8, 3, 3, 1]}
       dataInputComponent={ArrayInput}
       pseudocode={pseudocode}
+      code={codeSamples}
       relatedProblems={relatedProblems}
       category="Sorting Algorithm"
     />

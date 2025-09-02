@@ -114,6 +114,132 @@ const initialData: PreorderData[] = [{
 // Related LeetCode problems
 const relatedProblems = leetcodeProblems["preorder-traversal"] || [];
 
+const codeSamples = {
+  javascript: `// Preorder Tree Traversal (Recursive)
+class TreeNode {
+  constructor(val, left = null, right = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+function preorderTraversal(root) {
+  const result = [];
+  function traverse(node) {
+    if (!node) return;
+    
+    result.push(node.val); // Visit root first
+    traverse(node.left);   // Visit left subtree
+    traverse(node.right);  // Visit right subtree
+  }
+  
+  traverse(root);
+  return result;
+}
+
+// Iterative Preorder using Stack
+function preorderTraversalIterative(root) {
+  if (!root) return [];
+  const result = [];
+  const stack = [root];
+  
+  while (stack.length) {
+    const node = stack.pop();
+    result.push(node.val);
+    if (node.right) stack.push(node.right); // Push right first
+    if (node.left) stack.push(node.left);   // then left so left is processed first
+  }
+  
+  return result;
+}`,
+
+  python: `# Preorder Tree Traversal (Recursive)
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def preorder_traversal(root):
+    result = []
+    
+    def traverse(node):
+        if not node:
+            return
+        
+        result.append(node.val)   # Visit root first
+        traverse(node.left)       # Visit left subtree
+        traverse(node.right)      # Visit right subtree
+    
+    traverse(root)
+    return result
+
+# Iterative Preorder using Stack
+def preorder_traversal_iterative(root):
+    if not root:
+        return []
+    result = []
+    stack = [root]
+    
+    while stack:
+        node = stack.pop()
+        result.append(node.val)
+        if node.right:
+            stack.append(node.right)
+        if node.left:
+            stack.append(node.left)
+    
+    return result`,
+
+  java: `// Preorder Tree Traversal (Recursive)
+import java.util.*;
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+public class PreorderTraversal {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        traverse(root, result);
+        return result;
+    }
+    
+    private void traverse(TreeNode node, List<Integer> result) {
+        if (node == null) return;
+        result.add(node.val);          // Visit root first
+        traverse(node.left, result);   // Visit left subtree
+        traverse(node.right, result);  // Visit right subtree
+    }
+    
+    // Iterative Preorder using Stack
+    public List<Integer> preorderTraversalIterative(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) return result;
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+        
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            result.add(node.val);
+            if (node.right != null) stack.push(node.right);
+            if (node.left != null) stack.push(node.left);
+        }
+        return result;
+    }
+}`
+};
+
 export default function PreorderTraversalPage() {
   return (
     <AlgorithmPageTemplate
@@ -128,6 +254,7 @@ export default function PreorderTraversalPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Tree Algorithms"
+      code={codeSamples}
     />
   );
 }

@@ -149,6 +149,47 @@ const relatedProblems = [
   { id: 633, title: "Sum of Square Numbers", slug: "sum-of-square-numbers", difficulty: "Medium" as const }
 ];
 
+const codeSamples = {
+  javascript: `// Two pointers to find a pair with target sum in a sorted array
+function twoPointers(arr, target) {
+  let left = 0, right = arr.length - 1;
+  while (left < right) {
+    const sum = arr[left] + arr[right];
+    if (sum === target) return [left, right];
+    if (sum < target) left++;
+    else right--;
+  }
+  return [-1, -1];
+}`,
+  
+  python: `# Two pointers to find a pair with target sum in a sorted array
+def two_pointers(arr, target):
+    left, right = 0, len(arr) - 1
+    while left < right:
+        s = arr[left] + arr[right]
+        if s == target:
+            return left, right
+        if s < target:
+            left += 1
+        else:
+            right -= 1
+    return -1, -1`,
+
+  java: `// Two pointers to find a pair with target sum in a sorted array
+public class TwoPointersPairSum {
+    public int[] twoPointers(int[] arr, int target) {
+        int left = 0, right = arr.length - 1;
+        while (left < right) {
+            int sum = arr[left] + arr[right];
+            if (sum == target) return new int[]{left, right};
+            if (sum < target) left++;
+            else right--;
+        }
+        return new int[]{-1, -1};
+    }
+}`
+};
+
 export default function TwoPointersPage() {
   return (
     <AlgorithmPageTemplate
@@ -163,6 +204,7 @@ export default function TwoPointersPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Arrays"
+      code={codeSamples}
     />
   );
 }

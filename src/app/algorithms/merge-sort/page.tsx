@@ -148,6 +148,130 @@ const relatedProblems = [
   { id: 315, title: "Count of Smaller Numbers After Self", slug: "count-of-smaller-numbers-after-self", difficulty: "Hard" as const }
 ];
 
+const codeSamples: Record<string, string> = {
+  javascript: `function mergeSort(arr) {
+    if (arr.length <= 1) return arr;
+    
+    const mid = Math.floor(arr.length / 2);
+    const left = mergeSort(arr.slice(0, mid));
+    const right = mergeSort(arr.slice(mid));
+    
+    return merge(left, right);
+}
+
+function merge(left, right) {
+    const result = [];
+    let i = 0, j = 0;
+    
+    while (i < left.length && j < right.length) {
+        if (left[i] <= right[j]) {
+            result.push(left[i]);
+            i++;
+        } else {
+            result.push(right[j]);
+            j++;
+        }
+    }
+    
+    // Add remaining elements
+    return result.concat(left.slice(i)).concat(right.slice(j));
+}
+
+// Example usage
+const arr = [64, 34, 25, 12, 22, 11, 90];
+console.log("Original:", arr);
+console.log("Sorted:", mergeSort(arr));`,
+
+  python: `def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    
+    # Add remaining elements
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+
+# Example usage
+arr = [64, 34, 25, 12, 22, 11, 90]
+print("Original:", arr)
+print("Sorted:", merge_sort(arr))`,
+
+  java: `import java.util.Arrays;
+
+public class MergeSort {
+    public static void mergeSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+            
+            mergeSort(arr, left, mid);
+            mergeSort(arr, mid + 1, right);
+            merge(arr, left, mid, right);
+        }
+    }
+    
+    private static void merge(int[] arr, int left, int mid, int right) {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+        
+        int[] leftArr = new int[n1];
+        int[] rightArr = new int[n2];
+        
+        System.arraycopy(arr, left, leftArr, 0, n1);
+        System.arraycopy(arr, mid + 1, rightArr, 0, n2);
+        
+        int i = 0, j = 0, k = left;
+        
+        while (i < n1 && j < n2) {
+            if (leftArr[i] <= rightArr[j]) {
+                arr[k] = leftArr[i];
+                i++;
+            } else {
+                arr[k] = rightArr[j];
+                j++;
+            }
+            k++;
+        }
+        
+        while (i < n1) {
+            arr[k] = leftArr[i];
+            i++;
+            k++;
+        }
+        
+        while (j < n2) {
+            arr[k] = rightArr[j];
+            j++;
+            k++;
+        }
+    }
+    
+    public static void main(String[] args) {
+        int[] arr = {64, 34, 25, 12, 22, 11, 90};
+        System.out.println("Original: " + Arrays.toString(arr));
+        mergeSort(arr, 0, arr.length - 1);
+        System.out.println("Sorted: " + Arrays.toString(arr));
+    }
+}`
+};
+
 export default function MergeSortPage() {
   return (
     <AlgorithmPageTemplate
@@ -160,6 +284,7 @@ export default function MergeSortPage() {
       initialData={[64, 34, 25, 12, 22, 11, 90]}
       dataInputComponent={ArrayInput}
       pseudocode={pseudocode}
+      code={codeSamples}
       relatedProblems={relatedProblems}
       category="Sorting Algorithm"
     />

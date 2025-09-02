@@ -84,8 +84,17 @@ export default function TrieInsertPage() {
       initialData={["trie", "tree", "algo"]}
       dataInputComponent={TrieWordsInput}
       pseudocode={pseudocode}
-      relatedProblems={relatedProblems}
-      category="Data Structures"
-    />
-  );
-}
+       code={codeSamples}
+       relatedProblems={relatedProblems}
+       category="Trie"
+     />
+   );
+ }
+ 
+const codeSamples = {
+  javascript: `// Trie Insert - JavaScript\nclass TrieNode {\n  constructor() {\n    this.children = {};\n    this.isEnd = false;\n  }\n}\n\nclass Trie {\n  constructor() {\n    this.root = new TrieNode();\n  }\n\n  insert(word) {\n    let node = this.root;\n    for (const ch of word) {\n      if (!node.children[ch]) node.children[ch] = new TrieNode();\n      node = node.children[ch];\n    }\n    node.isEnd = true;\n  }\n}\n\n// Example:\n// const trie = new Trie();\n// trie.insert("apple");`,
+
+  python: `# Trie Insert - Python\nclass TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.is_end = False\n\nclass Trie:\n    def __init__(self):\n        self.root = TrieNode()\n\n    def insert(self, word: str) -> None:\n        node = self.root\n        for ch in word:\n            if ch not in node.children:\n                node.children[ch] = TrieNode()\n            node = node.children[ch]\n        node.is_end = True\n\n# Example:\n# trie = Trie()\n# trie.insert("apple")`,
+
+  java: `// Trie Insert - Java\nimport java.util.*;\nclass TrieNode {\n    Map<Character, TrieNode> children = new HashMap<>();\n    boolean isEnd = false;\n}\nclass Trie {\n    TrieNode root = new TrieNode();\n    public void insert(String word) {\n        TrieNode node = root;\n        for (char ch : word.toCharArray()) {\n            node.children.putIfAbsent(ch, new TrieNode());\n            node = node.children.get(ch);\n        }\n        node.isEnd = true;\n    }\n}\n// Example:\n// Trie trie = new Trie();\n// trie.insert("apple");`
+};

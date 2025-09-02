@@ -128,10 +128,82 @@ const pseudocode = [
 ];
 
 const relatedProblems = [
-  { id: 322, title: "Coin Change", slug: "coin-change", difficulty: "Medium" as const },
-  { id: 518, title: "Coin Change II", slug: "coin-change-ii", difficulty: "Medium" as const },
-  { id: 279, title: "Perfect Squares", slug: "perfect-squares", difficulty: "Medium" as const },
+  {
+    id: 322,
+    title: "Coin Change",
+    slug: "coin-change",
+    difficulty: "Medium" as const
+  },
+  {
+    id: 518,
+    title: "Coin Change 2",
+    slug: "coin-change-2",
+    difficulty: "Medium" as const
+  },
+  {
+    id: 279,
+    title: "Perfect Squares",
+    slug: "perfect-squares",
+    difficulty: "Medium" as const
+  },
+  {
+    id: 377,
+    title: "Combination Sum IV",
+    slug: "combination-sum-iv",
+    difficulty: "Medium" as const
+  },
+  {
+    id: 1049,
+    title: "Last Stone Weight II",
+    slug: "last-stone-weight-ii",
+    difficulty: "Medium" as const
+  }
 ];
+
+const codeSamples = {
+  "JavaScript": `// Dynamic Programming solution
+function coinChange(coins, amount) {
+  const dp = new Array(amount + 1).fill(Infinity);
+  dp[0] = 0;
+  
+  for (let i = 1; i <= amount; i++) {
+    for (const coin of coins) {
+      if (coin <= i) {
+        dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+      }
+    }
+  }
+  
+  return dp[amount] === Infinity ? -1 : dp[amount];
+}`,
+  "Python": `# Dynamic Programming solution
+def coin_change(coins, amount):
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0
+    
+    for i in range(1, amount + 1):
+        for coin in coins:
+            if coin <= i:
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+    
+    return dp[amount] if dp[amount] != float('inf') else -1`,
+  "Java": `// Dynamic Programming solution
+public int coinChange(int[] coins, int amount) {
+    int[] dp = new int[amount + 1];
+    Arrays.fill(dp, amount + 1);
+    dp[0] = 0;
+    
+    for (int i = 1; i <= amount; i++) {
+        for (int coin : coins) {
+            if (coin <= i) {
+                dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+            }
+        }
+    }
+    
+    return dp[amount] > amount ? -1 : dp[amount];
+}`
+};
 
 export default function Page() {
   return (
@@ -147,6 +219,7 @@ export default function Page() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Dynamic Programming"
+      code={codeSamples}
     />
   );
 }

@@ -222,6 +222,82 @@ const relatedProblems = [
   { id: 712, title: "Minimum ASCII Delete Sum for Two Strings", slug: "minimum-ascii-delete-sum-for-two-strings", difficulty: "Medium" as const }
 ];
 
+const codeSamples = {
+  "JavaScript": `// Edit Distance (Levenshtein Distance)
+function editDistance(s1, s2) {
+  const m = s1.length, n = s2.length;
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+  
+  // Base cases
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (s1[i - 1] === s2[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1];
+      } else {
+        dp[i][j] = 1 + Math.min(
+          dp[i - 1][j],     // delete
+          dp[i][j - 1],     // insert
+          dp[i - 1][j - 1]  // replace
+        );
+      }
+    }
+  }
+  
+  return dp[m][n];
+}`,
+  "Python": `# Edit Distance (Levenshtein Distance)
+def edit_distance(s1: str, s2: str) -> int:
+    m, n = len(s1), len(s2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    # Base cases
+    for i in range(m + 1):
+        dp[i][0] = i
+    for j in range(n + 1):
+        dp[0][j] = j
+    
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i - 1] == s2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = 1 + min(
+                    dp[i - 1][j],     # delete
+                    dp[i][j - 1],     # insert
+                    dp[i - 1][j - 1]  # replace
+                )
+    
+    return dp[m][n]`,
+  "Java": `// Edit Distance (Levenshtein Distance)
+public static int editDistance(String s1, String s2) {
+    int m = s1.length(), n = s2.length();
+    int[][] dp = new int[m + 1][n + 1];
+    
+    // Base cases
+    for (int i = 0; i <= m; i++) dp[i][0] = i;
+    for (int j = 0; j <= n; j++) dp[0][j] = j;
+    
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                dp[i][j] = dp[i - 1][j - 1];
+            } else {
+                dp[i][j] = 1 + Math.min(Math.min(
+                    dp[i - 1][j],     // delete
+                    dp[i][j - 1]),    // insert
+                    dp[i - 1][j - 1]  // replace
+                );
+            }
+        }
+    }
+    
+    return dp[m][n];
+}`
+};
+
 export default function EditDistancePage() {
   return (
     <AlgorithmPageTemplate
@@ -236,6 +312,7 @@ export default function EditDistancePage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Dynamic Programming"
+      code={codeSamples}
     />
   );
 }

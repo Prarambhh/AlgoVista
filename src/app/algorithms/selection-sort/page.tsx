@@ -102,6 +102,12 @@ const relatedProblems = [
   { id: 973, title: "K Closest Points to Origin", slug: "k-closest-points-to-origin", difficulty: "Medium" as const }
 ];
 
+const codeSamples: Record<string, string> = {
+  javascript: `function selectionSort(arr) {\n  const a = [...arr];\n  const n = a.length;\n  for (let i = 0; i < n - 1; i++) {\n    let minIdx = i;\n    for (let j = i + 1; j < n; j++) {\n      if (a[j] < a[minIdx]) minIdx = j;\n    }\n    if (minIdx !== i) {\n      [a[i], a[minIdx]] = [a[minIdx], a[i]];\n    }\n  }\n  return a;\n}\n\n// Example\nconsole.log(selectionSort([64, 34, 25, 12, 22, 11, 90]));`,
+  python: `def selection_sort(arr):\n    a = arr.copy()\n    n = len(a)\n    for i in range(n - 1):\n        min_idx = i\n        for j in range(i + 1, n):\n            if a[j] < a[min_idx]:\n                min_idx = j\n        if min_idx != i:\n            a[i], a[min_idx] = a[min_idx], a[i]\n    return a\n\nprint(selection_sort([64, 34, 25, 12, 22, 11, 90]))`,
+  java: `import java.util.Arrays;\n\npublic class SelectionSort {\n    public static void selectionSort(int[] arr) {\n        int n = arr.length;\n        for (int i = 0; i < n - 1; i++) {\n            int minIdx = i;\n            for (int j = i + 1; j < n; j++) {\n                if (arr[j] < arr[minIdx]) minIdx = j;\n            }\n            if (minIdx != i) {\n                int temp = arr[i];\n                arr[i] = arr[minIdx];\n                arr[minIdx] = temp;\n            }\n        }\n    }\n\n    public static void main(String[] args) {\n        int[] arr = {64, 34, 25, 12, 22, 11, 90};\n        selectionSort(arr);\n        System.out.println(Arrays.toString(arr));\n    }\n}`
+};
+
 export default function SelectionSortPage() {
   return (
     <AlgorithmPageTemplate
@@ -114,6 +120,7 @@ export default function SelectionSortPage() {
       initialData={[64, 34, 25, 12, 22, 11, 90]}
       dataInputComponent={ArrayInput}
       pseudocode={pseudocode}
+      code={codeSamples}
       relatedProblems={relatedProblems}
       category="Sorting Algorithm"
     />

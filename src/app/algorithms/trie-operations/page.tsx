@@ -207,6 +207,13 @@ const initialData: TrieOpsData[] = [
   },
 ];
 
+// Language-specific code samples for Trie operations
+const codeSamples: Record<string, string> = {
+  javascript: `class TrieNode {\n  constructor() {\n    this.children = {}; // Map<char, TrieNode>\n    this.isEnd = false;\n  }\n}\n\nclass Trie {\n  constructor() {\n    this.root = new TrieNode();\n  }\n\n  insert(word) {\n    let node = this.root;\n    for (const ch of word) {\n      if (!node.children[ch]) node.children[ch] = new TrieNode();\n      node = node.children[ch];\n    }\n    node.isEnd = true;\n  }\n\n  search(word) {\n    let node = this.root;\n    for (const ch of word) {\n      if (!node.children[ch]) return false;\n      node = node.children[ch];\n    }\n    return !!node.isEnd;\n  }\n}\n\n// Example\nconst trie = new Trie();\ntrie.insert("tree");\nconsole.log(trie.search("tree")); // true\nconsole.log(trie.search("trie")); // false`,
+  python: `class TrieNode:\n    def __init__(self):\n        self.children = {}  # dict[str, TrieNode]\n        self.is_end = False\n\nclass Trie:\n    def __init__(self):\n        self.root = TrieNode()\n\n    def insert(self, word: str) -> None:\n        node = self.root\n        for ch in word:\n            if ch not in node.children:\n                node.children[ch] = TrieNode()\n            node = node.children[ch]\n        node.is_end = True\n\n    def search(self, word: str) -> bool:\n        node = self.root\n        for ch in word:\n            if ch not in node.children:\n                return False\n            node = node.children[ch]\n        return node.is_end\n\n# Example\ntrie = Trie()\ntrie.insert("tree")\nprint(trie.search("tree"))  # True\nprint(trie.search("trie"))  # False`,
+  java: `import java.util.*;\n\nclass TrieNode {\n    Map<Character, TrieNode> children = new HashMap<>();\n    boolean isEnd = false;\n}\n\npublic class Trie {\n    private final TrieNode root = new TrieNode();\n\n    public void insert(String word) {\n        TrieNode node = root;\n        for (char ch : word.toCharArray()) {\n            node.children.putIfAbsent(ch, new TrieNode());\n            node = node.children.get(ch);\n        }\n        node.isEnd = true;\n    }\n\n    public boolean search(String word) {\n        TrieNode node = root;\n        for (char ch : word.toCharArray()) {\n            if (!node.children.containsKey(ch)) return false;\n            node = node.children.get(ch);\n        }\n        return node.isEnd;\n    }\n\n    public static void main(String[] args) {\n        Trie trie = new Trie();\n        trie.insert("tree");\n        System.out.println(trie.search("tree")); // true\n        System.out.println(trie.search("trie")); // false\n    }\n}`
+};
+
 export default function TrieOperationsPage() {
   return (
     <AlgorithmPageTemplate
@@ -219,6 +226,7 @@ export default function TrieOperationsPage() {
       initialData={initialData}
       dataInputComponent={TrieOperationsInput}
       pseudocode={pseudocode}
+      code={codeSamples}
       relatedProblems={relatedProblems as any}
       category="Data Structures"
     />

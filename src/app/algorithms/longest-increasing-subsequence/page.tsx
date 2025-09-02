@@ -136,8 +136,17 @@ export default function LISPage() {
       initialData={[10, 9, 2, 5, 3, 7, 101, 18]}
       dataInputComponent={ArrayInput}
       pseudocode={pseudocode}
-      relatedProblems={relatedProblems}
-      category="Dynamic Programming"
-    />
+       code={codeSamples}
+       relatedProblems={relatedProblems}
+       category="Dynamic Programming"
+     />
   );
 }
+
+const codeSamples = {
+  javascript: `// Longest Increasing Subsequence (O(n^2) DP) - JavaScript\nfunction lis(arr) {\n  const n = arr.length;\n  if (n === 0) return { length: 0, sequence: [] };\n  const dp = new Array(n).fill(1);\n  const prev = new Array(n).fill(-1);\n  let maxLen = 1, maxIdx = 0;\n  for (let i = 0; i < n; i++) {\n    for (let j = 0; j < i; j++) {\n      if (arr[j] < arr[i] && dp[j] + 1 > dp[i]) {\n        dp[i] = dp[j] + 1;\n        prev[i] = j;\n      }\n    }\n    if (dp[i] > maxLen) { maxLen = dp[i]; maxIdx = i; }\n  }\n  const seq = [];\n  for (let k = maxIdx; k !== -1; k = prev[k]) seq.push(arr[k]);\n  seq.reverse();\n  return { length: maxLen, sequence: seq };\n}\n\n// Example:\n// console.log(lis([10,9,2,5,3,7,101,18]));`,
+
+  python: `# Longest Increasing Subsequence (O(n^2) DP) - Python\ndef lis(arr):\n    n = len(arr)\n    if n == 0:\n        return {\"length\": 0, \"sequence\": []}\n    dp = [1] * n\n    prev = [-1] * n\n    max_len, max_idx = 1, 0\n    for i in range(n):\n        for j in range(i):\n            if arr[j] < arr[i] and dp[j] + 1 > dp[i]:\n                dp[i] = dp[j] + 1\n                prev[i] = j\n        if dp[i] > max_len:\n            max_len, max_idx = dp[i], i\n    seq = []\n    k = max_idx\n    while k != -1:\n        seq.append(arr[k])\n        k = prev[k]\n    seq.reverse()\n    return {\"length\": max_len, \"sequence\": seq}\n\n# Example:\n# print(lis([10,9,2,5,3,7,101,18]))`,
+
+  java: `// Longest Increasing Subsequence (O(n^2) DP) - Java\nimport java.util.*;\npublic class LIS {\n    public static class Result {\n        public int length;\n        public List<Integer> sequence;\n        public Result(int l, List<Integer> s) { length = l; sequence = s; }\n    }\n    public static Result lis(int[] arr) {\n        int n = arr.length;\n        if (n == 0) return new Result(0, new ArrayList<>());\n        int[] dp = new int[n];\n        int[] prev = new int[n];\n        Arrays.fill(dp, 1);\n        Arrays.fill(prev, -1);\n        int maxLen = 1, maxIdx = 0;\n        for (int i = 0; i < n; i++) {\n            for (int j = 0; j < i; j++) {\n                if (arr[j] < arr[i] && dp[j] + 1 > dp[i]) {\n                    dp[i] = dp[j] + 1;\n                    prev[i] = j;\n                }\n            }\n            if (dp[i] > maxLen) { maxLen = dp[i]; maxIdx = i; }\n        }\n        List<Integer> seq = new ArrayList<>();\n        for (int k = maxIdx; k != -1; k = prev[k]) seq.add(arr[k]);\n        Collections.reverse(seq);\n        return new Result(maxLen, seq);\n    }\n    // Example:\n    // System.out.println(lis(new int[]{10,9,2,5,3,7,101,18}).length);\n}`
+};

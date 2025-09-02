@@ -72,7 +72,8 @@ html { scroll-behavior: smooth; }
 .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px var(--accent-shadow); }
 .btn:active { transform: translateY(0); }
 
-.badge { display: inline-block; padding: 0.25rem 0.5rem; background: rgba(16, 185, 129, 0.15); color: #34d399; border-radius: 999px; font-size: 12px; font-weight: 600; }
+/* Badge: keep neutral base, color via utility classes */
+.badge { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 12px; font-weight: 600; }
 
 .text-muted { color: var(--muted-foreground); }
 
@@ -85,3 +86,86 @@ html { scroll-behavior: smooth; }
 /* Decorative background blobs */
 .bg-blob-emerald { background: radial-gradient(45% 45% at 50% 50%, rgba(16,185,129,0.45) 0%, rgba(16,185,129,0.0) 60%); }
 .bg-blob-sky { background: radial-gradient(45% 45% at 50% 50%, rgba(14,165,233,0.45) 0%, rgba(14,165,233,0.0) 60%); }
+
+/* PrismJS minimal theme (scoped) */
+/* Base styles */
+pre[class*="language-"], code[class*="language-"] {
+  color: var(--foreground);
+  background: transparent;
+  text-shadow: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9rem;
+}
+pre[class*="language-"] {
+  padding: 1rem;
+  margin: 0;
+  overflow: auto;
+  border-radius: 0.5rem;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6b7280; /* gray-500 */
+}
+
+.token.punctuation {
+  color: #9ca3af; /* gray-400 */
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #fca5a5; /* red-300 */
+}
+
+.token.boolean,
+.token.number {
+  color: #f59e0b; /* amber-500 */
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #34d399; /* emerald-400 */
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #60a5fa; /* blue-400 */
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #a78bfa; /* violet-400 */
+}
+
+.token.function,
+.token.class-name {
+  color: #f472b6; /* pink-400 */
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #f87171; /* red-400 */
+}
+
+.token.bold { font-weight: 700; }
+.token.italic { font-style: italic; }
+
+/* Selection */
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+  background: rgba(99, 102, 241, 0.25); /* indigo-500/25 */
+}

@@ -177,6 +177,93 @@ const relatedProblems = [
   }
 ];
 
+const codeSamples = {
+  "JavaScript": `function dijkstra(graph, start) {
+  const dist = {};
+  const prev = {};
+  const visited = new Set();
+  for (const u in graph) {
+    dist[u] = Infinity;
+    prev[u] = null;
+  }
+  dist[start] = 0;
+  while (true) {
+    let u = null;
+    let best = Infinity;
+    for (const node in dist) {
+      if (!visited.has(node) && dist[node] < best) {
+        best = dist[node];
+        u = node;
+      }
+    }
+    if (u === null) break;
+    visited.add(u);
+    for (const { to, w } of (graph[u] || [])) {
+      const alt = dist[u] + w;
+      if (alt < dist[to]) {
+        dist[to] = alt;
+        prev[to] = u;
+      }
+    }
+  }
+  return { dist, prev };
+}`,
+  "Python": `import heapq
+
+def dijkstra(graph, start):
+    dist = {u: float('inf') for u in graph}
+    prev = {u: None for u in graph}
+    dist[start] = 0
+    pq = [(0, start)]
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]:
+            continue
+        for v, w in graph.get(u, []):
+            alt = dist[u] + w
+            if alt < dist[v]:
+                dist[v] = alt
+                prev[v] = u
+                heapq.heappush(pq, (alt, v))
+    return dist, prev`,
+  "Java": `import java.util.*;
+
+class Graph {
+    private final Map<Integer, List<int[]>> adj = new HashMap<>(); // u -> list of [v, w]
+    public void addEdge(int u, int v, int w) {
+        adj.computeIfAbsent(u, k -> new ArrayList<>()).add(new int[]{v, w});
+        // For undirected, also add reverse
+        adj.computeIfAbsent(v, k -> new ArrayList<>()).add(new int[]{u, w});
+    }
+    public Map<Integer, Integer> dijkstra(int start) {
+        Map<Integer, Integer> dist = new HashMap<>();
+        Map<Integer, Integer> prev = new HashMap<>();
+        for (int u : adj.keySet()) {
+            dist.put(u, Integer.MAX_VALUE);
+            prev.put(u, null);
+        }
+        dist.put(start, 0);
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
+        pq.add(new int[]{0, start});
+        while (!pq.isEmpty()) {
+            int[] cur = pq.poll();
+            int d = cur[0], u = cur[1];
+            if (d != dist.get(u)) continue;
+            for (int[] e : adj.getOrDefault(u, Collections.emptyList())) {
+                int v = e[0], w = e[1];
+                int alt = dist.get(u) + w;
+                if (alt < dist.getOrDefault(v, Integer.MAX_VALUE)) {
+                    dist.put(v, alt);
+                    prev.put(v, u);
+                    pq.add(new int[]{alt, v});
+                }
+            }
+        }
+        return dist; // prev contains parents to reconstruct paths
+    }
+}`
+};
+
 export default function DijkstraPage() {
   return (
     <AlgorithmPageTemplate
@@ -191,6 +278,7 @@ export default function DijkstraPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Graph Algorithms"
+      code={codeSamples}
     />
   );
 }

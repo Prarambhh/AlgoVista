@@ -295,6 +295,189 @@ const initialData: BSTDeleteData[] = [{
 
 const relatedProblems = leetcodeProblems["bst-delete"] || [];
 
+const codeSamples = {
+        javascript: `// Binary Search Tree Delete - JavaScript
+      class TreeNode {
+        constructor(val, left = null, right = null) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+        }
+      }
+      
+      function deleteNode(root, key) {
+        // Base case: if tree is empty
+        if (!root) {
+          return null;
+        }
+        
+        // Recursively find the node to delete
+        if (key < root.val) {
+          root.left = deleteNode(root.left, key);
+        } else if (key > root.val) {
+          root.right = deleteNode(root.right, key);
+        } else {
+          // Node to be deleted found
+          
+          // Case 1: Node has no children (leaf node)
+          if (!root.left && !root.right) {
+            return null;
+          }
+          
+          // Case 2: Node has only one child
+          if (!root.left) {
+            return root.right;
+          }
+          if (!root.right) {
+            return root.left;
+          }
+          
+          // Case 3: Node has two children
+          // Find inorder successor (smallest in right subtree)
+          let successor = findMin(root.right);
+          root.val = successor.val;
+          root.right = deleteNode(root.right, successor.val);
+        }
+        
+        return root;
+      }
+      
+      function findMin(node) {
+        while (node.left) {
+          node = node.left;
+        }
+        return node;
+      }`,
+      
+      python: `# Binary Search Tree Delete - Python
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val
+            self.left = left
+            self.right = right
+    
+    def delete_node(root, key):
+        """
+        Delete a node from BST
+        Time: O(log n) average, O(n) worst case
+        Space: O(log n) average, O(n) worst case (recursion stack)
+        """
+        # Base case: if tree is empty
+        if not root:
+            return None
+        
+        # Recursively find the node to delete
+        if key < root.val:
+            root.left = delete_node(root.left, key)
+        elif key > root.val:
+            root.right = delete_node(root.right, key)
+        else:
+            # Node to be deleted found
+            
+            # Case 1: Node has no children (leaf node)
+            if not root.left and not root.right:
+                return None
+            
+            # Case 2: Node has only one child
+            if not root.left:
+                return root.right
+            if not root.right:
+                return root.left
+            
+            # Case 3: Node has two children
+            # Find inorder successor (smallest in right subtree)
+            successor = find_min(root.right)
+            root.val = successor.val
+            root.right = delete_node(root.right, successor.val)
+        
+        return root
+    
+    def find_min(node):
+        """Find the minimum value node in the tree"""
+        while node.left:
+            node = node.left
+        return node
+    
+    def find_max(node):
+        """Find the maximum value node in the tree"""
+        while node.right:
+            node = node.right
+        return node`,
+      
+      java: `// Binary Search Tree Delete - Java
+    class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+    
+    public class BSTDelete {
+        /**
+         * Delete a node from BST
+         * Time: O(log n) average, O(n) worst case
+         * Space: O(log n) average, O(n) worst case (recursion stack)
+         */
+        public TreeNode deleteNode(TreeNode root, int key) {
+            // Base case: if tree is empty
+            if (root == null) {
+                return null;
+            }
+            
+            // Recursively find the node to delete
+            if (key < root.val) {
+                root.left = deleteNode(root.left, key);
+            } else if (key > root.val) {
+                root.right = deleteNode(root.right, key);
+            } else {
+                // Node to be deleted found
+                
+                // Case 1: Node has no children (leaf node)
+                if (root.left == null && root.right == null) {
+                    return null;
+                }
+                
+                // Case 2: Node has only one child
+                if (root.left == null) {
+                    return root.right;
+                }
+                if (root.right == null) {
+                    return root.left;
+                }
+                
+                // Case 3: Node has two children
+                // Find inorder successor (smallest in right subtree)
+                TreeNode successor = findMin(root.right);
+                root.val = successor.val;
+                root.right = deleteNode(root.right, successor.val);
+            }
+            
+            return root;
+        }
+        
+        private TreeNode findMin(TreeNode node) {
+            while (node.left != null) {
+                node = node.left;
+            }
+            return node;
+        }
+        
+        private TreeNode findMax(TreeNode node) {
+            while (node.right != null) {
+                node = node.right;
+            }
+            return node;
+        }
+    }`
+};
+
 export default function BSTDeletePage() {
   return (
     <AlgorithmPageTemplate
@@ -309,6 +492,7 @@ export default function BSTDeletePage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Tree Algorithms"
+      code={codeSamples}
     />
   );
 }

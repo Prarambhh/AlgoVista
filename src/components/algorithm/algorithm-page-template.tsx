@@ -21,6 +21,8 @@ interface AlgorithmPageTemplateProps {
     onDataChange: (data: any[]) => void;
   }>;
   pseudocode: string[];
+  // Optional language -> code mapping for rendering code tabs
+  code?: Record<string, string>;
   relatedProblems: Array<{
     id: number;
     title: string;

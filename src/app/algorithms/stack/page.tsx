@@ -175,6 +175,58 @@ const relatedProblems = [
   { id: 739, title: "Daily Temperatures", slug: "daily-temperatures", difficulty: "Medium" as const }
 ];
 
+const codeSamples = {
+  javascript: `// Stack implementation using array
+class Stack {
+  constructor(){ this.items = []; }
+  push(x){ this.items.push(x); }
+  pop(){ if(this.isEmpty()) throw new Error('Underflow'); return this.items.pop(); }
+  top(){ return this.isEmpty() ? null : this.items[this.items.length - 1]; }
+  isEmpty(){ return this.items.length === 0; }
+  size(){ return this.items.length; }
+}
+
+// Usage
+const s = new Stack();
+s.push(1); s.push(2); s.pop();`,
+
+  python: `# Stack implementation using list
+class Stack:
+    def __init__(self):
+        self.items = []
+    def push(self, x):
+        self.items.append(x)
+    def pop(self):
+        if self.is_empty():
+            raise Exception('Underflow')
+        return self.items.pop()
+    def top(self):
+        return None if self.is_empty() else self.items[-1]
+    def is_empty(self):
+        return len(self.items) == 0
+    def size(self):
+        return len(self.items)
+
+# Usage
+s = Stack()
+s.push(1); s.push(2); s.pop()`,
+
+  java: `// Stack implementation using Deque
+import java.util.*;
+class StackDS {
+    private Deque<Integer> stack = new ArrayDeque<>();
+    public void push(int x){ stack.push(x); }
+    public int pop(){ if(stack.isEmpty()) throw new RuntimeException("Underflow"); return stack.pop(); }
+    public Integer top(){ return stack.peek(); }
+    public boolean isEmpty(){ return stack.isEmpty(); }
+    public int size(){ return stack.size(); }
+}
+
+// Usage
+// StackDS s = new StackDS();
+// s.push(1); s.push(2); s.pop();`
+};
+
 export default function StackPage() {
   return (
     <AlgorithmPageTemplate
@@ -189,6 +241,7 @@ export default function StackPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Data Structures"
+      code={codeSamples}
     />
   );
 }

@@ -103,8 +103,17 @@ export default function TrieSearchPage() {
       initialData={[["trie", "tree", "algo"], "tree"]}
       dataInputComponent={TrieWordsAndQueryInput}
       pseudocode={pseudocode}
-      relatedProblems={relatedProblems}
-      category="Data Structures"
-    />
-  );
-}
+       code={codeSamples}
+       relatedProblems={relatedProblems}
+       category="Trie"
+     />
+   );
+ }
+ 
+const codeSamples = {
+  javascript: `// Trie Search - JavaScript\nclass TrieNode {\n  constructor() {\n    this.children = {};\n    this.isEnd = false;\n  }\n}\n\nclass Trie {\n  constructor() {\n    this.root = new TrieNode();\n  }\n  insert(word) {\n    let node = this.root;\n    for (const ch of word) {\n      if (!node.children[ch]) node.children[ch] = new TrieNode();\n      node = node.children[ch];\n    }\n    node.isEnd = true;\n  }\n  search(word) {\n    let node = this.root;\n    for (const ch of word) {\n      if (!node.children[ch]) return false;\n      node = node.children[ch];\n    }\n    return node.isEnd;\n  }\n}\n\n// Example:\n// const trie = new Trie();\n// ["trie","tree","algo"].forEach(w => trie.insert(w));\n// console.log(trie.search("tree")); // true\n// console.log(trie.search("tr"));   // false`,
+
+  python: `# Trie Search - Python\nclass TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.is_end = False\n\nclass Trie:\n    def __init__(self):\n        self.root = TrieNode()\n\n    def insert(self, word: str) -> None:\n        node = self.root\n        for ch in word:\n            if ch not in node.children:\n                node.children[ch] = TrieNode()\n            node = node.children[ch]\n        node.is_end = True\n\n    def search(self, word: str) -> bool:\n        node = self.root\n        for ch in word:\n            if ch not in node.children:\n                return False\n            node = node.children[ch]\n        return node.is_end\n\n# Example:\n# trie = Trie()\n# for w in ["trie","tree","algo"]:\n#     trie.insert(w)\n# print(trie.search("tree"))  # True\n# print(trie.search("tr"))    # False`,
+
+  java: `// Trie Search - Java\nimport java.util.*;\nclass TrieNode {\n    Map<Character, TrieNode> children = new HashMap<>();\n    boolean isEnd = false;\n}\nclass Trie {\n    TrieNode root = new TrieNode();\n    public void insert(String word) {\n        TrieNode node = root;\n        for (char ch : word.toCharArray()) {\n            node.children.putIfAbsent(ch, new TrieNode());\n            node = node.children.get(ch);\n        }\n        node.isEnd = true;\n    }\n    public boolean search(String word) {\n        TrieNode node = root;\n        for (char ch : word.toCharArray()) {\n            TrieNode next = node.children.get(ch);\n            if (next == null) return false;\n            node = next;\n        }\n        return node.isEnd;\n    }\n}\n// Example:\n// Trie trie = new Trie();\n// for (String w : Arrays.asList("trie","tree","algo")) trie.insert(w);\n// System.out.println(trie.search("tree")); // true\n// System.out.println(trie.search("tr"));   // false`
+};

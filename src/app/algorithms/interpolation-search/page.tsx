@@ -72,6 +72,62 @@ const pseudocode = [
   "  return -1"
 ];
 
+const codeSamples = {
+  "JavaScript": `function interpolationSearch(arr, target) {
+  let low = 0;
+  let high = arr.length - 1;
+
+  while (low <= high && target >= arr[low] && target <= arr[high]) {
+    if (low === high) {
+      return arr[low] === target ? low : -1;
+    }
+
+    const pos = low + Math.floor(((target - arr[low]) * (high - low)) / (arr[high] - arr[low]));
+
+    if (arr[pos] === target) return pos;
+
+    if (arr[pos] < target) low = pos + 1;
+    else high = pos - 1;
+  }
+
+  return -1;
+}`,
+  "Python": `def interpolation_search(arr, target):
+    low, high = 0, len(arr) - 1
+    while low <= high and target >= arr[low] and target <= arr[high]:
+        if low == high:
+            return low if arr[low] == target else -1
+
+        pos = low + ((target - arr[low]) * (high - low)) // (arr[high] - arr[low])
+
+        if arr[pos] == target:
+            return pos
+        if arr[pos] < target:
+            low = pos + 1
+        else:
+            high = pos - 1
+    return -1`,
+  "Java": `public class InterpolationSearch {
+    public static int interpolationSearch(int[] arr, int target) {
+        int low = 0, high = arr.length - 1;
+        while (low <= high && target >= arr[low] && target <= arr[high]) {
+            if (low == high)
+                return (arr[low] == target) ? low : -1;
+
+            int pos = low + (int)(((long)(target - arr[low]) * (high - low)) / (arr[high] - arr[low]));
+
+            if (arr[pos] == target)
+                return pos;
+            if (arr[pos] < target)
+                low = pos + 1;
+            else
+                high = pos - 1;
+        }
+        return -1;
+    }
+}`
+};
+
 export default function InterpolationSearchPage() {
   const relatedProblems = leetcodeProblems["interpolation-search"] || [];
 
@@ -88,6 +144,7 @@ export default function InterpolationSearchPage() {
       pseudocode={pseudocode}
       relatedProblems={relatedProblems}
       category="Searching Algorithm"
+      code={codeSamples}
     />
   );
 }
