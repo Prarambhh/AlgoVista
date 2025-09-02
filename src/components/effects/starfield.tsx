@@ -106,7 +106,8 @@ export function Starfield() {
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
         // Drift downward gently; wrap when off-screen
-        s.y += s.speed * (dt * 0.06);
+        const speedFactor = isLight ? 1.3 : 1; // Light mode moves a bit faster; dark mode unchanged
+        s.y += s.speed * (dt * 0.06) * speedFactor;
         s.x += mouseX * 0.05; // parallax
 
         if (s.y > height + 2) {
