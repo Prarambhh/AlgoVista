@@ -29,7 +29,7 @@ export default function AlgorithmPageTemplateClient({
   const [steps, setSteps] = useState<VisualizationStep[]>([]);
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [speed, setSpeed] = useState(600);
+  const [speed, setSpeed] = useState(1000);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const hydratedFromUrl = useRef(false);
   const [copied, setCopied] = useState(false);
@@ -145,7 +145,7 @@ export default function AlgorithmPageTemplateClient({
       const speedParam = sp.get("speed");
       const playParam = sp.get("play");
       const dataParam = sp.get("data");
-      if (speedParam) setSpeed(Math.max(100, Math.min(2000, Number(speedParam) || 600)));
+      if (speedParam) setSpeed(Math.max(100, Math.min(2000, Number(speedParam) || 1000)));
       if (playParam === "1") setIsPlaying(true);
       if (dataParam) {
         let parsed: any = null;
@@ -406,7 +406,7 @@ export default function AlgorithmPageTemplateClient({
               <div className="surface p-4 mb-4 transition-colors">
                 <VisualizationComponent 
                   step={currentStepData}
-                  data={data}
+                  data={currentArray ?? data}
                   onDataChange={handleDataChange}
                 />
               </div>
